@@ -1,10 +1,10 @@
 package game.model;
 
-public interface DirectedGraph<T>{
+public interface DirectedGraph<I, T>{
 
-    public void addVertex(T toAdd);
+    public void addVertex(I id, T toAdd);
 
-    public void addConnection(T pointer, T pointed, String direction);
+    public void addConnection(I pointer, I pointed, String direction, int weight);
 
 
 }
