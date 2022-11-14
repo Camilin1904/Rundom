@@ -15,6 +15,7 @@ public class Vertex<I, T> {
     private int color;
     private int initial;
     private int end;
+    private int type;
     
     public Vertex(T value){
         this.value = value;
@@ -120,6 +121,14 @@ public class Vertex<I, T> {
     }
     public void setId(I id) {
         this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
 }

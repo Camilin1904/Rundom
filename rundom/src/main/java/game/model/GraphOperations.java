@@ -2,6 +2,7 @@ package game.model;
 
 import java.util.*;
 
+@SuppressWarnings("removal")
 public class GraphOperations {
 
     public static <I, T> void BFS(Vertex<I, T> s, Graph<I, T> graph){
@@ -59,24 +60,27 @@ public class GraphOperations {
 
 
     public static <I, T> Stack<Vertex<I, T>> dijktraPath(Graph<I, T> graph, Vertex<I, T> start, Vertex<I, T> end){
-        PriorityQueue<Vertex<I, T>> vertexes = new PriorityQueue<>(new Comparator<Vertex<I, T>>() {
+        ArrayList<Vertex<I, T>> vertexes = new ArrayList<>();
+        Comparator<Vertex<I, T>> comp = new Comparator<Vertex<I, T>>() {
             @Override
             public int compare(Vertex<I, T> o1, Vertex<I, T> o2) {
-                return o1.getDistance()-o2.getDistance();
+                return new Integer(o1.getDistance()).compareTo(new Integer(o2.getDistance()));
             }
-        });
+        };
 
+        start.setDistance(0);
         for(Vertex<I, T> item : graph){
-            item.setDistance(Integer.MAX_VALUE);
+            if(item!=start) item.setDistance(Integer.MAX_VALUE);
             item.setParent(null);
             vertexes.add(item);
         }
 
+        vertexes.sort(comp);
         Stack<Vertex<I, T>> path = new Stack<>();
-
-        start.setDistance(0);
-        while(!vertexes.isEmpty()){
-            Vertex<I, T> u = vertexes.poll();
+        System.out.println(vertexes);
+        Vertex<I, T> u = null;
+        while(!vertexes.isEmpty()&&u!=end){
+            u = vertexes.remove(0);
             for (Pair<Vertex<I, T>,Integer> item : u.getAdyacentVertex()){
                 int dist = item.getB() + u.getDistance();
                 if(dist<item.getA().getDistance()){
@@ -84,15 +88,28 @@ public class GraphOperations {
                     item.getA().setParent(u);
                 }
             }
+            System.out.println("-" + u);
+            System.out.println("+" + start + "/" + end);
+            vertexes.sort(comp);
         }
-
-        Vertex<I, T> u = end;
 
         while(u!=start){
             path.push(u);
             u = u.getParent();
         }
         return path;
+    }
+
+    public static <I, T> boolean checkConexivity(Graph<I, T> graph, Vertex<I, T> start){
+        BFS(start, graph);
+        boolean conexed = true;
+        for(Vertex<I,T> item : graph){
+            if(item.getType()!=0){ 
+                if(conexed = (item.getColor()!=2)) break;
+            }
+        }
+
+        return conexed;
     }
 
     public static void main(String[] args) {

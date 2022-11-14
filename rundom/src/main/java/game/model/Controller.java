@@ -1,14 +1,14 @@
 package game.model;
 
 import java.util.Arrays;
+import javax.swing.JOptionPane;
 
-@SuppressWarnings("unchecked")
 public class Controller {
     
     private Graph<String, Moveable> stage = new Graph<>();
     public static void main(String[] args) {
-        Graph<String, Moveable> trial = new Graph<>();
-        Enemy.getInstance().setMap(trial);
+        //Graph<String, Moveable> trial = new Graph<>();
+        /*Enemy.getInstance().setMap(trial);
         trial.addVertex("1", Enemy.getInstance());
         Enemy.getInstance().setPosition(trial.searchVertex("1"));
         trial.addVertex("2", null);
@@ -20,33 +20,90 @@ public class Controller {
         trial.addConnection("2", "3", "R", 4);
         trial.addConnection("3", "4", "L", 1);
 
-        Enemy.getInstance().updatePath();
+        Enemy.getInstance().updatePath();*/
 
         Controller c = new Controller();
-        c.createScenario(10, 1.6);
+        c.createScenario(3, 1.6);
+
+        Enemy.getInstance().updatePath();
+
     }
 
-    public void createScenario(int size, double genConst){
+    /**
+     * Creates the graph with the starting enemy and player position, it is generated randomly 
+     * with some tiles disconected and some with a higher weight, this will affect how the enemy
+     * tracks the player. It returns the template used to generate the graphs for it to be used
+     * to draw the visual representation of the stage.
+     * @param size it will always be square shaped, therefore this is both its withs and lenght
+     * 
+     * @param genConst a number that will determine how common are blank spaces and how common are obstacles
+     *   
+     * @return the template generated to help the creation of the graph
+     */
+    public int[][] createScenario(int size, double genConst){
+        stage.clear();
+        boolean check = true;
+        String k = "";
         int[][] template = new int[size][size];
-        for(int i=0; i<size; i++){
-            for (int j=0; j<size; j++){
-                template[i][j] = (int)Math.round(Math.random()*genConst);
-                stage.addVertex(i + "," + j, null);
+        while(check){
+            Enemy.getInstance().setMap(stage);
+
+            for(int i=0; i<size; i++){
+                for (int j=0; j<size; j++){
+                    template[i][j] = (int)Math.round(Math.random()*genConst);
+                    stage.addVertex(i + "," + j, null);
+                }
+                System.out.println(Arrays.toString(template[i]));
+                k += Arrays.toString(template[i]) + "\n ";
             }
-            System.out.println(Arrays.toString(template[i]));
-        }
+    
+            JOptionPane.showMessageDialog(null, k);
+    
+            for(int i=0; i<size; i++){
+                for(int j=0; j<size; j++){
+                    Vertex<String, Moveable> m = stage.searchVertex(i + "," + j);
+                    if(template[i][j]!=0){
+                        if(i>0&&template[i-1][j]!=0) m.setUp(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex((i-1) + "," + j), template[i-1][j]));
+                        if(i<size-1&&template[i+1][j]!=0) m.setDown(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex((i+1) + "," + j), template[i+1][j]));
+                        if(j>0&&template[i][j-1]!=0) m.setLeft(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex(i + "," + (j-1)), template[i][j-1]));
+                        if(j<size-1&&template[i][j+1]!=0) m.setRight(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex(i + "," + (j+1)), template[i][j+1]));
+                    }
+                    m.setType(template[i][j]);
+                }
+            }
+            int i = (int)(Math.random()*size),j = (int)(Math.random()*size);
+            boolean proceed = false;
+            Vertex<String, Moveable> u = null;
+            while (!proceed){
+                System.out.println("o:" + i + "," + j);
+                if(template[i][j]!=0){
+                    u = stage.searchVertex(i + "," + j);
+                    stage.addValue(i + "," + j,Enemy.getInstance());
+                    Enemy.getInstance().setPosition(u);
+                    proceed = true;
+                }
+                if(!proceed){
+                    i = (int)Math.random()*size;
+                    j = (int)Math.random()*size;
+                }
+            }
 
-        for(int i=0; i<size; i++){
-            for(int j=0; j<size; j++){
-                Vertex<String, Moveable> m = stage.searchVertex(i + "," + j);
-                m.setUp(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex((i-1) + "," + j), i>1? template[i-1][j] : 0));
-                m.setDown(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex((i+1) + "," + j), i<size? template[i+1][j] : 0));
-                m.setRight(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex(i + "," + j), j>1?template[i][j-1] : 0));
-                m.setLeft(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex(i + "," + j), j<size?template[i][j+1] : 0));
+            check = GraphOperations.checkConexivity(stage, u);
+        }
+        int i = (int)(Math.random()*size),j = (int)(Math.random()*size);
+        boolean proceed = false;
+        while (!proceed){
+            System.out.println("i");
+            if(template[i][j]!=0&&stage.searchVertex(i + "," + j).getValue()!=Enemy.getInstance()) {
+                stage.addValue(i + "," + j, Player.getInstance());
+                proceed = true;
+            }
+            if(!proceed){
+                i = (int)(Math.random()*size);
+                j = (int)(Math.random()*size);
             }
         }
-
-
+        return template;
 
     }
 

@@ -16,7 +16,7 @@ public class Graph<I, T> implements DirectedGraph<I, T>, Iterable<Vertex<I, T>>{
     public void addVertex(I id, T toAdd) {
         Vertex<I, T> t = new Vertex<I, T>(id, toAdd);
         vertexCollection.put(id, t);
-        aux.put(toAdd, t);
+        if(toAdd!=null) aux.put(toAdd, t);
     }
 
     @Override
@@ -43,6 +43,11 @@ public class Graph<I, T> implements DirectedGraph<I, T>, Iterable<Vertex<I, T>>{
         
     }
 
+    public void addValue(I id, T toAdd){
+        searchVertex(id).setValue(toAdd);
+        aux.put(toAdd, searchVertex(id));
+    }
+
     @Override
     public Iterator<Vertex<I, T>> iterator() {
         ArrayList<Vertex<I, T>> things = new ArrayList<>();
@@ -56,6 +61,10 @@ public class Graph<I, T> implements DirectedGraph<I, T>, Iterable<Vertex<I, T>>{
 
     public Vertex<I, T> containerOf(T value){
         return aux.get(value);
+    }
+
+    public void clear(){
+        vertexCollection.clear();
     }
     
 }

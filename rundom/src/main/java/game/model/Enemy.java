@@ -14,7 +14,9 @@ public class Enemy implements Moveable{
 
     private static Enemy instance = new Enemy();
 
-    private Enemy(){}
+    private Enemy(){
+        path = new Stack<>();
+    }
     
     public int move(){
         updatePath();
@@ -26,6 +28,7 @@ public class Enemy implements Moveable{
     }
 
     public void updatePath(){
+        path.clear();
         Vertex<String, Moveable> pPos = map.containerOf(Player.getInstance());
         if(goal!=pPos){
             goal = pPos;
