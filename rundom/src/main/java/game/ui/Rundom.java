@@ -19,6 +19,7 @@ public class Rundom extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("primary"), 640, 480);
         stage.setScene(scene);
+        //C:\Users\camic\OneDrive\Documentos\Discretas_1\Ti 2\rundom\rundom\src\main\resources\game\aplication\primary.fxml
         stage.show();
     }
 

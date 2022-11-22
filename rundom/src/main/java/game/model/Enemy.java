@@ -2,6 +2,7 @@ package game.model;
 
 import java.util.Stack;
 
+@SuppressWarnings("unchecked")
 public class Enemy implements Moveable{
 
     private Vertex<String, Moveable> position;
@@ -32,7 +33,7 @@ public class Enemy implements Moveable{
         Vertex<String, Moveable> pPos = map.containerOf(Player.getInstance());
         if(goal!=pPos){
             goal = pPos;
-            path = GraphOperations.dijktraPath(map, position, pPos);
+            path = (Stack<Vertex<String, Moveable>>) map.dijktraPath(position.getId(), pPos.getId());
         }
         System.out.println(path);
     }

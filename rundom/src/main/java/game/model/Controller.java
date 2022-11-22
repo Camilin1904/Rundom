@@ -88,7 +88,7 @@ public class Controller {
                 }
             }
 
-            check = GraphOperations.checkConexivity(stage, u);
+            check = stage.checkConexivity(u.getId());
         }
         int i = (int)(Math.random()*size),j = (int)(Math.random()*size);
         boolean proceed = false;

@@ -2,7 +2,7 @@ package game.model;
 
 import java.util.*;
 
-public class Vertex<I, T> {
+public class Vertex<I extends Comparable<I>, T> implements Comparable<Vertex<I,T>>{
     private I id;
     private T value;
     private Pair<Vertex<I, T>,Integer> up;
@@ -54,8 +54,7 @@ public class Vertex<I, T> {
     public Pair<Vertex<I, T>,Integer> getDown() {
         return down;
     }
-    public void setDown(Pair<Vertex<I, T>,Integer> down) {
-        adyacentVertex.remove(this.down);
+    public void setDown(Pair<Vertex<I, T>,Integer> down) {;
         this.down = down;
         adyacentVertex.add(down);
     }
@@ -63,7 +62,6 @@ public class Vertex<I, T> {
         return left;
     }
     public void setLeft(Pair<Vertex<I, T>,Integer> left) {
-        adyacentVertex.remove(this.left);
         this.left = left;
         adyacentVertex.add(left);
     }
@@ -71,7 +69,6 @@ public class Vertex<I, T> {
         return right;
     }
     public void setRight(Pair<Vertex<I, T>,Integer> right) {
-        adyacentVertex.remove(this.right);
         this.right = right;
         adyacentVertex.add(right);
     }
@@ -79,7 +76,6 @@ public class Vertex<I, T> {
         return up;
     }
     public void setUp(Pair<Vertex<I, T>,Integer> up) {
-        adyacentVertex.remove(this.up);
         this.up = up;
         adyacentVertex.add(up);
     }
@@ -129,6 +125,11 @@ public class Vertex<I, T> {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    public int compareTo(Vertex<I, T> o) {
+        return id.compareTo(o.getId());
     }
 
 }
