@@ -275,7 +275,7 @@ public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Itera
             if(i.getValue().getoCol()==0){
                 Vertex<I,T> u = i.getValue();
                 while(u.getParent()!=null){
-                    weight+=u.getDistance();
+                    if(u.getoCol()==0)weight+=u.getDistance();
                     u.setoCol(1);
                     u = u.getParent();
                 }
@@ -365,7 +365,7 @@ public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Itera
         g.addConnection("AT", "CH", "R", 700);
         g.addConnection("CH", "AT", "R", 700);
 
-        g.prim("AT");
+        System.out.println(g.prim("AT"));
     }
 }
 

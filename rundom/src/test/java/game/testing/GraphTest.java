@@ -99,7 +99,17 @@ public class GraphTest extends TestCase{
         assertEquals(test.floydWarshall(), h);
     }
 
-    public void testPrimm(){
+    public void testPrim(){
+        setUpScenario1();
+        assertEquals(test.prim("a"), 1200);
+        setUpScenario2();
+        assertEquals(test.prim("a"), 1950);
+        assertEquals(test.prim("b"), 1050);
 
     }
+
+    public void testKruskal(){
+        setUpScenario1();
+        
+    } 
 }

@@ -301,7 +301,7 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
 
 
 
-    public TreeSet<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> Kruskal(){// TODO: change the method to work with the matrix
+    public TreeSet<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> Kruskal(){
         UnionFind<Vertex<I,T>> u = new UnionFind<>();
         for(Vertex<I,T> item : this){
             u.makeSet(item);

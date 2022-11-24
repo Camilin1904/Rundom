@@ -21,34 +21,23 @@ public class Player implements Moveable{
         Pair<Vertex<String, Moveable>,Integer> newPos = null;
         switch(dir){
             case ("R"):
-                if((newPos = position.getRight())!=null){
-                    position.setValue(null);
-                    position = newPos.getA();
-                    position.setValue(instance);
-                }
+                newPos = position.getRight();
                 break;
             case("L"):
-                if((newPos = position.getLeft())!=null){
-                    position.setValue(null);
-                    position = newPos.getA();
-                    position.setValue(instance);
-                }
+                newPos = position.getLeft();
                 break;
             case("U"):
-                if((newPos = position.getUp())!=null){
-                    position.setValue(null);
-                    position = newPos.getA();
-                    position.setValue(instance);
-                }
+                newPos = position.getUp();
                 break;
             case("D"):
-                if((newPos = position.getDown())!=null){
-                    position.setValue(null);
-                    position = newPos.getA();
-                    position.setValue(instance);
-                }
+                newPos = position.getDown();
                 break;
 
+        }
+        if(newPos!=null){
+            position.setValue(null);
+            position = newPos.getA();
+            position.setValue(instance);
         }
         return newPos!=null?newPos.getB():-1;
     }
