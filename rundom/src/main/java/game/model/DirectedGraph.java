@@ -7,6 +7,7 @@ public interface DirectedGraph<I, T>{
     public void addVertex(I id, T toAdd);
 
     public void addConnection(I pointer, I pointed, String direction, int weight);
+    public void addConnection(I pointer, I pointed, int weight);
 
     public void addValue(I id, T value);
 

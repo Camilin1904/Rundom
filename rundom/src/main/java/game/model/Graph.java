@@ -43,6 +43,14 @@ public class Graph<I extends Comparable<I>, T> implements DirectedGraph<I, T>, I
         
     }
 
+    @Override
+    public void addConnection(I pointer, I pointed, int weight) {
+        
+        Pair<Vertex<I, T>,Integer> p = new Pair<Vertex<I, T>,Integer>(vertexCollection.get(pointed), weight);
+        vertexCollection.get(pointer).getAdyacentVertex().add(p);
+        
+    }
+
     public void addValue(I id, T toAdd){
         searchVertex(id).setValue(toAdd);
         aux.put(toAdd, searchVertex(id));
@@ -96,6 +104,9 @@ public class Graph<I extends Comparable<I>, T> implements DirectedGraph<I, T>, I
             u.setColor(2);
         }
     }
+
+
+    
 
     public void DFS(){
         for(Vertex<I, T> n : this){
@@ -174,7 +185,7 @@ public class Graph<I extends Comparable<I>, T> implements DirectedGraph<I, T>, I
         boolean conexed = true;
         for(Vertex<I,T> item : this){
             if(item.getType()!=0){ 
-                if(conexed = (item.getColor()!=2)) break;
+                if(!(conexed = (item.getColor()==2))) break;
             }
         }
 

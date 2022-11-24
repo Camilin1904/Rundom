@@ -53,6 +53,11 @@ public class MatrixGraph<I extends Comparable<I>, T> implements DirectedGraph<I,
     }
 
     @Override
+    public void addConnection(I pointer, I pointed, int weight) {
+        adyacenseMatrix.get(pointer).replace(pointed, weight);
+    }
+
+    @Override
     public void addValue(I id, T value){
         searchVertex(id).setValue(value);
         aux.put(value, searchVertex(id));
