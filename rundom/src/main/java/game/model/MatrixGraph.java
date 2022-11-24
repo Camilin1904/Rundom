@@ -54,6 +54,10 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
     @Override
     public void addConnection(I pointer, I pointed, int weight) {
         adyacenseMatrix.get(pointer).replace(pointed, weight);
+        System.out.println("/");
+        for (Map.Entry<I,HashMap<I,Integer>> i : adyacenseMatrix.entrySet()){
+            System.out.println(i.getValue());
+        }
     }
 
     @Override
@@ -191,7 +195,10 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         boolean conexed = true;
         for(Vertex<I,T> item : this){
             if(item.getType()!=0){ 
-                if(conexed = (item.getColor()!=2)) break;
+                if(item.getColor()!=2){
+                    conexed = false;
+                    break;
+                }
             }
         }
 
@@ -220,7 +227,7 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         }
         for (Vertex<I,T> item : this){
             for (Map.Entry<I,Integer> i : adyacenseMatrix.get(item.getId()).entrySet()){
-                dist.get(item.getId()).replace(i.getKey(), i.getValue());
+                if(i.getValue()>0) dist.get(item.getId()).replace(i.getKey(), i.getValue());
             }
         }
 
@@ -271,9 +278,11 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         while(!q.isEmpty()){
             Vertex<I,T> u = q.remove(0);
             for(Map.Entry<I,Integer> i : adyacenseMatrix.get(u.getId()).entrySet()){
-                if(searchVertex(i.getKey()).getColor()==0&&i.getValue()<searchVertex(i.getKey()).getDistance()){
-                    searchVertex(i.getKey()).setDistance(i.getValue());
-                    searchVertex(i.getKey()).setParent(u);
+                if(i.getValue()>0){
+                    if(searchVertex(i.getKey()).getColor()==0&&i.getValue()<searchVertex(i.getKey()).getDistance()){
+                        searchVertex(i.getKey()).setDistance(i.getValue());
+                        searchVertex(i.getKey()).setParent(u);
+                    }
                 }
             }
             u.setColor(2);
@@ -286,7 +295,7 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
             if(i.getValue().getoCol()==0){
                 Vertex<I,T> u = i.getValue();
                 while(u.getParent()!=null){
-                    weight+=u.getDistance();
+                    if(u.getoCol()==0)weight+=u.getDistance();
                     u.setoCol(1);
                     u = u.getParent();
                 }
@@ -309,7 +318,7 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         ArrayList<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> edges = new ArrayList<>();
         for (Vertex<I,T> item : this){
               for (Map.Entry<I,Integer> i : adyacenseMatrix.get(item.getId()).entrySet()){
-                edges.add(new Pair<>(new Pair<>(item, searchVertex(i.getKey())), i.getValue()));
+                if(i.getValue()>0) edges.add(new Pair<>(new Pair<>(item, searchVertex(i.getKey())), i.getValue()));
             }
         }
         edges.sort(new Comparator<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>>() {
@@ -343,4 +352,51 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         
     }
     
+}
+class UnionFind<T>{
+    private HashSet<T> allSet;
+    private ArrayList<HashSet<T>> rootSet;
+
+    public UnionFind(){
+        allSet = new HashSet<>();
+        rootSet = new ArrayList<>();
+    }
+
+    public void makeSet(T item){
+        if(allSet.add(item)){
+            HashSet<T> t = new HashSet<>();
+            t.add(item);
+            rootSet.add(t);
+        }
+
+    }
+    public HashSet<T> find(T item){
+        HashSet<T> toReturn = null;
+        for (HashSet<T> i : rootSet){
+            if(i.contains(item)){
+                toReturn = i;
+                break;
+            }
+        }
+        return toReturn;
+    }
+    public void union(T a, T b){
+        HashSet<T> unified = null;
+        HashSet<T> toUnify = null;
+        
+
+        for(HashSet<T> item : rootSet){
+            if(item.contains(a)){
+                unified = item;
+            }
+            else if (item.contains(b)){
+                toUnify = item;
+            }
+        }
+        if(unified!=null&&toUnify!=null){
+            rootSet.remove(toUnify);
+            unified.addAll(toUnify);
+        }
+    }
+
 }

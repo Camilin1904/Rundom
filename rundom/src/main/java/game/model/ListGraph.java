@@ -184,7 +184,10 @@ public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Itera
         boolean conexed = true;
         for(Vertex<I,T> item : this){
             if(item.getType()!=0){ 
-                if(!(conexed = (item.getColor()==2))) break;
+                if(item.getColor()!=2){
+                    conexed = false;
+                    break;
+                }
             }
         }
 
@@ -370,31 +373,25 @@ public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Itera
 }
 
 class UnionFind<T>{
-    
-    private TreeSet<T> allSet;
-    private TreeSet<TreeSet<T>> rootSet;
+    private HashSet<T> allSet;
+    private ArrayList<HashSet<T>> rootSet;
 
     public UnionFind(){
-        allSet = new TreeSet<>();
-        rootSet = new TreeSet<>(new Comparator<TreeSet<T>>() {
-            @Override
-            public int compare(TreeSet<T> o1, TreeSet<T> o2) {
-                return o1.equals(o2)?0:1;
-            }
-        });
+        allSet = new HashSet<>();
+        rootSet = new ArrayList<>();
     }
 
     public void makeSet(T item){
         if(allSet.add(item)){
-            TreeSet<T> t = new TreeSet<>();
+            HashSet<T> t = new HashSet<>();
             t.add(item);
             rootSet.add(t);
         }
 
     }
-    public TreeSet<T> find(T item){
-        TreeSet<T> toReturn = null;
-        for (TreeSet<T> i : rootSet){
+    public HashSet<T> find(T item){
+        HashSet<T> toReturn = null;
+        for (HashSet<T> i : rootSet){
             if(i.contains(item)){
                 toReturn = i;
                 break;
@@ -403,10 +400,11 @@ class UnionFind<T>{
         return toReturn;
     }
     public void union(T a, T b){
-        TreeSet<T> unified = null;
-        TreeSet<T> toUnify = null;
+        HashSet<T> unified = null;
+        HashSet<T> toUnify = null;
+        
 
-        for(TreeSet<T> item : rootSet){
+        for(HashSet<T> item : rootSet){
             if(item.contains(a)){
                 unified = item;
             }
@@ -415,8 +413,8 @@ class UnionFind<T>{
             }
         }
         if(unified!=null&&toUnify!=null){
-            unified.addAll(toUnify);
             rootSet.remove(toUnify);
+            unified.addAll(toUnify);
         }
     }
 

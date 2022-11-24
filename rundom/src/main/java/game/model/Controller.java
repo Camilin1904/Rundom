@@ -3,9 +3,10 @@ package game.model;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("unchecked")
 public class Controller {
     
-    private MatrixGraph<String, Moveable> stage = new MatrixGraph<>();
+    private Graph<String, Moveable> stage = new ListGraph<>();
     public static void main(String[] args) {
         /*MatrixGraph<String, Moveable> trial = new MatrixGraph<>();
         Enemy.getInstance().setMap(trial);
@@ -42,12 +43,12 @@ public class Controller {
      */
     public int[][] createScenario(int size, double genConst){
         stage.clear();
-        boolean check = true;
+        boolean check = false;
         String k = "";
         int[][] template = new int[size][size];
-        while(check){
+        while(!check){
             Enemy.getInstance().setMap(stage);
-
+            k = "";
             for(int i=0; i<size; i++){
                 for (int j=0; j<size; j++){
                     template[i][j] = (int)Math.round(Math.random()*genConst);
@@ -61,7 +62,7 @@ public class Controller {
     
             for(int i=0; i<size; i++){
                 for(int j=0; j<size; j++){
-                    Vertex<String, Moveable> m = stage.searchVertex(i + "," + j);
+                    Vertex<String, Moveable> m = (Vertex<String, Moveable>) stage.searchVertex(i + "," + j);
                     if(template[i][j]!=0){
                         if(i>0&&template[i-1][j]!=0) stage.addConnection(i + "," + j, (i-1) + "," + j, "U", template[i-1][j]);
                         if(i<size-1&&template[i+1][j]!=0) stage.addConnection(i + "," + j, (i+1) + "," + j, "D", template[i+1][j]);
@@ -77,7 +78,7 @@ public class Controller {
             while (!proceed){
                 System.out.println("o:" + i + "," + j);
                 if(template[i][j]!=0){
-                    u = stage.searchVertex(i + "," + j);
+                    u = (Vertex<String, Moveable>) stage.searchVertex(i + "," + j);
                     stage.addValue(i + "," + j,Enemy.getInstance());
                     Enemy.getInstance().setPosition(u);
                     proceed = true;
@@ -94,7 +95,7 @@ public class Controller {
         boolean proceed = false;
         while (!proceed){
             System.out.println("i");
-            if(template[i][j]!=0&&stage.searchVertex(i + "," + j).getValue()!=Enemy.getInstance()) {
+            if(template[i][j]!=0&&((Vertex<String, Moveable>)stage.searchVertex(i + "," + j)).getValue()!=Enemy.getInstance()) {
                 stage.addValue(i + "," + j, Player.getInstance());
                 proceed = true;
             }
