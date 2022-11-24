@@ -15,7 +15,7 @@ public class Vertex<I extends Comparable<I>, T> implements Comparable<Vertex<I,T
     private int color;
     private int initial;
     private int end;
-    private int type;
+    private int type = 1;
     private int oCol;
     
     public Vertex(T value){

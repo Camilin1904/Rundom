@@ -7,7 +7,7 @@ public class Enemy implements Moveable{
 
     private Vertex<String, Moveable> position;
 
-    private DirectedGraph<String, Moveable> map;
+    private Graph<String, Moveable> map;
     
     private Vertex<String, Moveable> goal = null;
 
@@ -38,7 +38,7 @@ public class Enemy implements Moveable{
         System.out.println(path);
     }
 
-    public void setMap(DirectedGraph<String, Moveable> map) {
+    public void setMap(Graph<String, Moveable> map) {
         this.map = map;
     }
     public void setPosition(Vertex<String, Moveable> position) {

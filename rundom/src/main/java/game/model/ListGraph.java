@@ -2,37 +2,27 @@ package game.model;
 
 import java.util.*;
 
-public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iterable<Vertex<I, T>>{
+public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Iterable<Vertex<I, T>>{
 
-    private HashMap<I, HashMap<I, Integer>> adyacenseMatrix;
-    private HashMap<I,Vertex<I,T>> vertexCollection;
+    private HashMap<I, Vertex<I, T>> vertexCollection;
     private HashMap<T, Vertex<I, T>> aux;
 
-    public MatrixGraph(){
-        adyacenseMatrix = new HashMap<>();
+    public ListGraph(){
         vertexCollection = new HashMap<>();
         aux = new HashMap<>();
     }
 
     @Override
     public void addVertex(I id, T toAdd) {
-        adyacenseMatrix.put(id, new HashMap<>());
-        for(Map.Entry<I, Vertex<I, T>> item : vertexCollection.entrySet()){
-            adyacenseMatrix.get(id).put(item.getKey(), 0);
-        }
-        
-        for (Map.Entry<I,HashMap<I,Integer>> item : adyacenseMatrix.entrySet()){
-            item.getValue().put(id, 0);
-        }
-        Vertex<I,T> t = new Vertex<I, T>(id, toAdd);
+        Vertex<I, T> t = new Vertex<I, T>(id, toAdd);
         vertexCollection.put(id, t);
         if(toAdd!=null) aux.put(toAdd, t);
-        
     }
 
     public void addConnection(I pointer, I pointed, String direction, int weight) {
-        adyacenseMatrix.get(pointer).replace(pointed, weight);
+        
         Pair<Vertex<I, T>,Integer> p = new Pair<Vertex<I, T>,Integer>(vertexCollection.get(pointed), weight);
+        
         switch (direction){
             case ("R"):
                 vertexCollection.get(pointer).setRight(p);
@@ -49,35 +39,46 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
             default:
                 System.out.println("No");
         }
+        
     }
 
     @Override
     public void addConnection(I pointer, I pointed, int weight) {
-        adyacenseMatrix.get(pointer).replace(pointed, weight);
+        
+        Pair<Vertex<I, T>,Integer> p = new Pair<Vertex<I, T>,Integer>(vertexCollection.get(pointed), weight);
+        vertexCollection.get(pointer).getAdyacentVertex().add(p);
+        
+    }
+
+    public void addValue(I id, T toAdd){
+        searchVertex(id).setValue(toAdd);
+        aux.put(toAdd, searchVertex(id));
     }
 
     @Override
-    public void addValue(I id, T value){
-        searchVertex(id).setValue(value);
-        aux.put(value, searchVertex(id));
-    }
-
-    @Override
-    public T search(I id) {
-        return vertexCollection.get(id).getValue();
+    public Iterator<Vertex<I, T>> iterator() {
+        ArrayList<Vertex<I, T>> things = new ArrayList<>();
+        for(Map.Entry<I, Vertex<I, T>> i : vertexCollection.entrySet()) things.add(i.getValue());
+        return things.iterator();
     }
 
     public Vertex<I, T> searchVertex(I id){
         return vertexCollection.get(id);
     }
 
-    @Override
+    public T search(I id){
+        return vertexCollection.get(id).getValue();
+    }
+
     public Vertex<I, T> containerOf(T value){
         return aux.get(value);
     }
 
-    @Override
-    public void BFS(I s) {
+    public void clear(){
+        vertexCollection.clear();
+    }
+
+    public void BFS(I s){
         Vertex<I,T> h  =searchVertex(s);
         ArrayList<Vertex<I, T>> queue = new ArrayList<>();
         for(Vertex<I, T> n : this){
@@ -91,25 +92,22 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         queue.add(h);
         while(!queue.isEmpty()){
             Vertex<I, T> u = queue.remove(0);
-            for(Map.Entry<I,Integer> n : adyacenseMatrix.get(u.getId()).entrySet()){
-                if(n.getValue()>0){
-                    if(searchVertex(n.getKey()).getColor()==0){
-                        searchVertex(n.getKey()).setColor(1);
-                        searchVertex(n.getKey()).setDistance(u.getDistance()+1);
-                        searchVertex(n.getKey()).setParent(u);
-                        queue.add(searchVertex(n.getKey()));
-                    }
+            for(Pair<Vertex<I, T>, Integer> n : u.getAdyacentVertex()){
+                if(n.getA().getColor()==0){
+                    n.getA().setColor(1);
+                    n.getA().setDistance(u.getDistance()+1);
+                    n.getA().setParent(u);
+                    queue.add(n.getA());
                 }
             }
             u.setColor(2);
         }
-        
     }
+
 
     
 
-    @Override
-    public void DFS() {
+    public void DFS(){
         for(Vertex<I, T> n : this){
             n.setColor(0);
             n.setParent(null);
@@ -125,12 +123,10 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         time++;
         vertex.setInitial(time);
         vertex.setColor(1);
-        for (Map.Entry<I,Integer> n : adyacenseMatrix.get(vertex.getId()).entrySet()){
-            if(n.getValue()>0){
-                if(searchVertex(n.getKey()).getColor()==0){
-                    searchVertex(n.getKey()).setParent(vertex);
-                    DFSVisit(searchVertex(n.getKey()), time);
-                }
+        for (Pair<Vertex<I, T>,Integer> n : vertex.getAdyacentVertex()){
+            if(n.getA().getColor()==0){
+                n.getA().setParent(vertex);
+                DFSVisit(n.getA(), time);
             }
         }
         vertex.setColor(2);
@@ -139,8 +135,8 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         return time;
     }
 
-    @Override
-    public Stack<Vertex<I,T>> dijktraPath(I startID, I endID) {
+
+    public Stack<Vertex<I, T>> dijktraPath(I startID, I endID){
         Vertex<I,T> start = searchVertex(startID);
         Vertex<I,T> end = searchVertex(endID);
         ArrayList<Vertex<I, T>> vertexes = new ArrayList<>();
@@ -164,13 +160,11 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         Vertex<I, T> u = null;
         while(!vertexes.isEmpty()&&u!=end){
             u = vertexes.remove(0);
-            for (Map.Entry<I,Integer> n : adyacenseMatrix.get(u.getId()).entrySet()){
-                if(n.getValue()>0){
-                    int dist = n.getValue() + u.getDistance();
-                    if(dist<searchVertex(n.getKey()).getDistance()){
-                        searchVertex(n.getKey()).setDistance(dist);
-                        searchVertex(n.getKey()).setParent(u);
-                    }
+            for (Pair<Vertex<I, T>,Integer> item : u.getAdyacentVertex()){
+                int dist = item.getB() + u.getDistance();
+                if(dist<item.getA().getDistance()){
+                    item.getA().setDistance(dist);
+                    item.getA().setParent(u);
                 }
             }
             System.out.println("-" + u);
@@ -185,25 +179,20 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         return path;
     }
 
-    @Override
-    public boolean checkConexivity(I start) {
+    public boolean checkConexivity(I start){
         BFS(start);
         boolean conexed = true;
         for(Vertex<I,T> item : this){
             if(item.getType()!=0){ 
-                if(conexed = (item.getColor()!=2)) break;
+                if(!(conexed = (item.getColor()==2))) break;
             }
         }
 
         return conexed;
     }
 
-    @Override
-    public Iterator<Vertex<I, T>> iterator() {
-        ArrayList<Vertex<I, T>> things = new ArrayList<>();
-        for(Map.Entry<I, Vertex<I, T>> i : vertexCollection.entrySet()) things.add(i.getValue());
-        return things.iterator();
-    }
+
+
 
     public HashMap<I, HashMap<I,Integer>> floydWarshall(){
         HashMap<I, HashMap<I,Integer>> dist = new HashMap<>();
@@ -219,8 +208,8 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
             dist.get(i.getKey()).replace(i.getKey(), 0);
         }
         for (Vertex<I,T> item : this){
-            for (Map.Entry<I,Integer> i : adyacenseMatrix.get(item.getId()).entrySet()){
-                dist.get(item.getId()).replace(i.getKey(), i.getValue());
+            for (Pair<Vertex<I,T>,Integer> i : item.getAdyacentVertex()){
+                dist.get(item.getId()).replace(i.getA().getId(), i.getB());
             }
         }
 
@@ -244,7 +233,7 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
 
 
 
-    public int prim(I rs){ 
+    public int prim(I rs){
         Vertex<I,T> r = vertexCollection.get(rs);
         for(Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
             i.getValue().setDistance(Integer.MAX_VALUE);
@@ -270,10 +259,10 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
 
         while(!q.isEmpty()){
             Vertex<I,T> u = q.remove(0);
-            for(Map.Entry<I,Integer> i : adyacenseMatrix.get(u.getId()).entrySet()){
-                if(searchVertex(i.getKey()).getColor()==0&&i.getValue()<searchVertex(i.getKey()).getDistance()){
-                    searchVertex(i.getKey()).setDistance(i.getValue());
-                    searchVertex(i.getKey()).setParent(u);
+            for(Pair<Vertex<I,T>, Integer> i : u.getAdyacentVertex()){
+                if(i.getA().getColor()==0&&i.getB()<i.getA().getDistance()){
+                    i.getA().setDistance(i.getB());
+                    i.getA().setParent(u);
                 }
             }
             u.setColor(2);
@@ -301,15 +290,15 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
 
 
 
-    public TreeSet<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> Kruskal(){// TODO: change the method to work with the matrix
+    public TreeSet<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> Kruskal(){
         UnionFind<Vertex<I,T>> u = new UnionFind<>();
         for(Vertex<I,T> item : this){
             u.makeSet(item);
         }
         ArrayList<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> edges = new ArrayList<>();
         for (Vertex<I,T> item : this){
-              for (Map.Entry<I,Integer> i : adyacenseMatrix.get(item.getId()).entrySet()){
-                edges.add(new Pair<>(new Pair<>(item, searchVertex(i.getKey())), i.getValue()));
+              for (Pair<Vertex<I,T>,Integer> i : item.getAdyacentVertex()){
+                edges.add(new Pair<>(new Pair<>(item, i.getA()), i.getB()));
             }
         }
         edges.sort(new Comparator<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>>() {
@@ -336,11 +325,99 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         return A;
     }
 
-    public void clear(){
-        vertexCollection.clear();
-    }
     public static void main(String[] args) {
-        
+        ListGraph<String, String> g = new ListGraph<>();
+        /*g.addVertex("1", "a");
+        g.addVertex("2", "b");
+        g.addVertex("3", "c");
+        g.addVertex("4", "d");
+        g.addConnection("1", "3", "R", -2);
+        g.addConnection("2", "1", "R", 4);
+        g.addConnection("2", "3", "R", 3);
+        g.addConnection("3", "4", "R", 2);
+        g.addConnection("4", "2", "R", -1);
+        /*g.addConnection("b", "d", "R", 3);
+        g.addConnection("d", "b", "R", 3);
+        System.out.println(g.Kruskal());
+        System.out.println(g.floydWarshall());*/
+
+        g.addVertex("SF", "SF");
+        g.addVertex("CH", "CH");
+        g.addVertex("DE", "DE");
+        g.addVertex("NY", "NY");
+        g.addVertex("AT", "AT");
+        g.addConnection("SF", "NY", "R", 2000);
+        g.addConnection("NY", "SF", "R", 2000);
+        g.addConnection("SF", "AT", "R", 2200);
+        g.addConnection("AT", "SF", "R", 2200);
+        g.addConnection("NY", "AT", "R", 800);
+        g.addConnection("AT", "NY", "R", 800);
+        g.addConnection("NY", "CH", "R", 1000);
+        g.addConnection("CH", "NY", "R", 1000);
+        g.addConnection("NY", "DE", "R", 1600);
+        g.addConnection("DE", "NY", "R", 1600);
+        g.addConnection("DE", "SF", "R", 900);
+        g.addConnection("SF", "DE", "R", 900);
+        g.addConnection("SF", "CH", "R", 1200);
+        g.addConnection("CH", "SF", "R", 1200);
+        g.addConnection("DE", "CH", "R", 1300);
+        g.addConnection("CH", "DE", "R", 1300);
+        g.addConnection("AT", "CH", "R", 700);
+        g.addConnection("CH", "AT", "R", 700);
+
+        g.prim("AT");
     }
+}
+
+class UnionFind<T>{
     
+    private TreeSet<T> allSet;
+    private TreeSet<TreeSet<T>> rootSet;
+
+    public UnionFind(){
+        allSet = new TreeSet<>();
+        rootSet = new TreeSet<>(new Comparator<TreeSet<T>>() {
+            @Override
+            public int compare(TreeSet<T> o1, TreeSet<T> o2) {
+                return o1.equals(o2)?0:1;
+            }
+        });
+    }
+
+    public void makeSet(T item){
+        if(allSet.add(item)){
+            TreeSet<T> t = new TreeSet<>();
+            t.add(item);
+            rootSet.add(t);
+        }
+
+    }
+    public TreeSet<T> find(T item){
+        TreeSet<T> toReturn = null;
+        for (TreeSet<T> i : rootSet){
+            if(i.contains(item)){
+                toReturn = i;
+                break;
+            }
+        }
+        return toReturn;
+    }
+    public void union(T a, T b){
+        TreeSet<T> unified = null;
+        TreeSet<T> toUnify = null;
+
+        for(TreeSet<T> item : rootSet){
+            if(item.contains(a)){
+                unified = item;
+            }
+            else if (item.contains(b)){
+                toUnify = item;
+            }
+        }
+        if(unified!=null&&toUnify!=null){
+            unified.addAll(toUnify);
+            rootSet.remove(toUnify);
+        }
+    }
+
 }
