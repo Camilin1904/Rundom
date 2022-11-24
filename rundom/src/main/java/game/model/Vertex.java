@@ -16,6 +16,7 @@ public class Vertex<I extends Comparable<I>, T> implements Comparable<Vertex<I,T
     private int initial;
     private int end;
     private int type;
+    private int oCol;
     
     public Vertex(T value){
         this.value = value;
@@ -130,6 +131,13 @@ public class Vertex<I extends Comparable<I>, T> implements Comparable<Vertex<I,T
     @Override
     public int compareTo(Vertex<I, T> o) {
         return id.compareTo(o.getId());
+    }
+
+    public int getoCol() {
+        return oCol;
+    }
+    public void setoCol(int oCol) {
+        this.oCol = oCol;
     }
 
 }

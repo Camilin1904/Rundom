@@ -6,11 +6,12 @@ public class MatrixGraph<I extends Comparable<I>, T> implements DirectedGraph<I,
 
     private HashMap<I, HashMap<I, Integer>> adyacenseMatrix;
     private HashMap<I,Vertex<I,T>> vertexCollection;
+    private HashMap<T, Vertex<I, T>> aux;
 
     public MatrixGraph(){
         adyacenseMatrix = new HashMap<>();
         vertexCollection = new HashMap<>();
-        
+        aux = new HashMap<>();
     }
 
     @Override
@@ -23,15 +24,38 @@ public class MatrixGraph<I extends Comparable<I>, T> implements DirectedGraph<I,
         for (Map.Entry<I,HashMap<I,Integer>> item : adyacenseMatrix.entrySet()){
             item.getValue().put(id, 0);
         }
-
-        vertexCollection.put(id, new Vertex<I, T>(id, toAdd));
+        Vertex<I,T> t = new Vertex<I, T>(id, toAdd);
+        vertexCollection.put(id, t);
+        if(toAdd!=null) aux.put(toAdd, t);
         
     }
 
     @Override
     public void addConnection(I pointer, I pointed, String direction, int weight) {
-        adyacenseMatrix.get(pointer).replace(pointed, 0, weight);
-        
+        adyacenseMatrix.get(pointer).replace(pointed, weight);
+        Pair<Vertex<I, T>,Integer> p = new Pair<Vertex<I, T>,Integer>(vertexCollection.get(pointed), weight);
+        switch (direction){
+            case ("R"):
+                vertexCollection.get(pointer).setRight(p);
+                break;
+            case("L"):
+                vertexCollection.get(pointer).setLeft(p);
+                break;
+            case("U"):
+                vertexCollection.get(pointer).setUp(p);
+                break;
+            case("D"):
+                vertexCollection.get(pointer).setDown(p);
+                break;
+            default:
+                System.out.println("No");
+        }
+    }
+
+    @Override
+    public void addValue(I id, T value){
+        searchVertex(id).setValue(value);
+        aux.put(value, searchVertex(id));
     }
 
     @Override
@@ -41,6 +65,11 @@ public class MatrixGraph<I extends Comparable<I>, T> implements DirectedGraph<I,
 
     public Vertex<I, T> searchVertex(I id){
         return vertexCollection.get(id);
+    }
+
+    @Override
+    public Vertex<I, T> containerOf(T value){
+        return aux.get(value);
     }
 
     @Override
@@ -72,6 +101,8 @@ public class MatrixGraph<I extends Comparable<I>, T> implements DirectedGraph<I,
         }
         
     }
+
+    
 
     @Override
     public void DFS() {
@@ -105,7 +136,7 @@ public class MatrixGraph<I extends Comparable<I>, T> implements DirectedGraph<I,
     }
 
     @Override
-    public Stack<?> dijktraPath(I startID, I endID) {
+    public Stack<Vertex<I,T>> dijktraPath(I startID, I endID) {
         Vertex<I,T> start = searchVertex(startID);
         Vertex<I,T> end = searchVertex(endID);
         ArrayList<Vertex<I, T>> vertexes = new ArrayList<>();
@@ -168,6 +199,144 @@ public class MatrixGraph<I extends Comparable<I>, T> implements DirectedGraph<I,
         ArrayList<Vertex<I, T>> things = new ArrayList<>();
         for(Map.Entry<I, Vertex<I, T>> i : vertexCollection.entrySet()) things.add(i.getValue());
         return things.iterator();
+    }
+
+    public HashMap<I, HashMap<I,Integer>> floydWarshall(){
+        HashMap<I, HashMap<I,Integer>> dist = new HashMap<>();
+        for (Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            dist.put(i.getKey(), new HashMap<>());
+        }
+        for (Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            for(Map.Entry<I,HashMap<I,Integer>> j : dist.entrySet()){
+                j.getValue().put(i.getKey(), Integer.MAX_VALUE);
+            }
+        }
+        for (Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            dist.get(i.getKey()).replace(i.getKey(), 0);
+        }
+        for (Vertex<I,T> item : this){
+            for (Map.Entry<I,Integer> i : adyacenseMatrix.get(item.getId()).entrySet()){
+                dist.get(item.getId()).replace(i.getKey(), i.getValue());
+            }
+        }
+
+        for (Map.Entry<I,Vertex<I,T>> k : vertexCollection.entrySet()){
+            for (Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+                for (Map.Entry<I,Vertex<I,T>> j : vertexCollection.entrySet()){
+                    long o = 0, a = 0, b = 0;
+                    a = (dist.get(i.getKey()).get(k.getKey()));
+                    b = (dist.get(k.getKey()).get(j.getKey()));
+                    if(dist.get(i.getKey()).get(j.getKey())>(o = a +b <Integer.MAX_VALUE?a+b:Integer.MAX_VALUE)&&i!=j){
+                        dist.get(i.getKey()).replace(j.getKey(), (int) o);
+                    }
+                }
+            }
+        }
+
+        return dist;
+
+    }
+
+
+
+
+    public int prim(I rs){ 
+        Vertex<I,T> r = vertexCollection.get(rs);
+        for(Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            i.getValue().setDistance(Integer.MAX_VALUE);
+            i.getValue().setColor(0);
+            i.getValue().setoCol(0);
+        }
+
+        Comparator<Vertex<I,T>> comp = new Comparator<Vertex<I,T>>() {
+            @Override
+            public int compare(Vertex<I, T> o1, Vertex<I, T> o2) {
+                return o1.getDistance()-o2.getDistance();
+            }
+        };
+
+        ArrayList<Vertex<I,T>> q = new ArrayList<>();
+        r.setDistance(0);
+        r.setParent(null);
+        for (Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            q.add(i.getValue());
+        }
+
+        q.sort(comp);
+
+        while(!q.isEmpty()){
+            Vertex<I,T> u = q.remove(0);
+            for(Map.Entry<I,Integer> i : adyacenseMatrix.get(u.getId()).entrySet()){
+                if(searchVertex(i.getKey()).getColor()==0&&i.getValue()<searchVertex(i.getKey()).getDistance()){
+                    searchVertex(i.getKey()).setDistance(i.getValue());
+                    searchVertex(i.getKey()).setParent(u);
+                }
+            }
+            u.setColor(2);
+            q.sort(comp);
+        }
+        
+        int weight = 0;
+
+        for(Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            if(i.getValue().getoCol()==0){
+                Vertex<I,T> u = i.getValue();
+                while(u.getParent()!=null){
+                    weight+=u.getDistance();
+                    u.setoCol(1);
+                    u = u.getParent();
+                }
+            }
+        }
+
+        return weight;
+
+    }
+
+
+
+
+
+    public TreeSet<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> Kruskal(){// TODO: change the method to work with the matrix
+        UnionFind<Vertex<I,T>> u = new UnionFind<>();
+        for(Vertex<I,T> item : this){
+            u.makeSet(item);
+        }
+        ArrayList<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> edges = new ArrayList<>();
+        for (Vertex<I,T> item : this){
+              for (Map.Entry<I,Integer> i : adyacenseMatrix.get(item.getId()).entrySet()){
+                edges.add(new Pair<>(new Pair<>(item, searchVertex(i.getKey())), i.getValue()));
+            }
+        }
+        edges.sort(new Comparator<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>>() {
+            @Override
+            public int compare(Pair<Pair<Vertex<I, T>, Vertex<I, T>>, Integer> o1,
+                    Pair<Pair<Vertex<I, T>, Vertex<I, T>>, Integer> o2) {
+                return o1.getB().compareTo(o2.getB());
+            }
+        });
+        TreeSet<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> A = new TreeSet<>(new Comparator<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>>(){
+            @Override
+            public int compare(Pair<Pair<Vertex<I, T>, Vertex<I, T>>, Integer> o1,
+                    Pair<Pair<Vertex<I, T>, Vertex<I, T>>, Integer> o2) {
+                return o1.equals(o2)?0:1;
+            }
+        });
+        for(Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer> i : edges){
+            if(u.find(i.getA().getA())!=u.find(i.getA().getB())){
+                A.add(i);
+                u.union(i.getA().getA(), i.getA().getB());
+            }
+        }
+
+        return A;
+    }
+
+    public void clear(){
+        vertexCollection.clear();
+    }
+    public static void main(String[] args) {
+        
     }
     
 }

@@ -126,7 +126,7 @@ public class Graph<I extends Comparable<I>, T> implements DirectedGraph<I, T>, I
     }
 
 
-    public Stack<?> dijktraPath(I startID, I endID){
+    public Stack<Vertex<I, T>> dijktraPath(I startID, I endID){
         Vertex<I,T> start = searchVertex(startID);
         Vertex<I,T> end = searchVertex(endID);
         ArrayList<Vertex<I, T>> vertexes = new ArrayList<>();
@@ -181,6 +181,9 @@ public class Graph<I extends Comparable<I>, T> implements DirectedGraph<I, T>, I
         return conexed;
     }
 
+
+
+
     public HashMap<I, HashMap<I,Integer>> floydWarshall(){
         HashMap<I, HashMap<I,Integer>> dist = new HashMap<>();
         for (Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
@@ -217,9 +220,65 @@ public class Graph<I extends Comparable<I>, T> implements DirectedGraph<I, T>, I
 
     }
 
-    public void prim(){
-           
+
+
+
+    public int prim(I rs){
+        Vertex<I,T> r = vertexCollection.get(rs);
+        for(Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            i.getValue().setDistance(Integer.MAX_VALUE);
+            i.getValue().setColor(0);
+            i.getValue().setoCol(0);
+        }
+
+        Comparator<Vertex<I,T>> comp = new Comparator<Vertex<I,T>>() {
+            @Override
+            public int compare(Vertex<I, T> o1, Vertex<I, T> o2) {
+                return o1.getDistance()-o2.getDistance();
+            }
+        };
+
+        ArrayList<Vertex<I,T>> q = new ArrayList<>();
+        r.setDistance(0);
+        r.setParent(null);
+        for (Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            q.add(i.getValue());
+        }
+
+        q.sort(comp);
+
+        while(!q.isEmpty()){
+            Vertex<I,T> u = q.remove(0);
+            for(Pair<Vertex<I,T>, Integer> i : u.getAdyacentVertex()){
+                if(i.getA().getColor()==0&&i.getB()<i.getA().getDistance()){
+                    i.getA().setDistance(i.getB());
+                    i.getA().setParent(u);
+                }
+            }
+            u.setColor(2);
+            q.sort(comp);
+        }
+        
+        int weight = 0;
+
+        for(Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            if(i.getValue().getoCol()==0){
+                Vertex<I,T> u = i.getValue();
+                while(u.getParent()!=null){
+                    weight+=u.getDistance();
+                    u.setoCol(1);
+                    u = u.getParent();
+                }
+            }
+        }
+
+        return weight;
+
     }
+
+
+
+
 
     public TreeSet<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> Kruskal(){
         UnionFind<Vertex<I,T>> u = new UnionFind<>();
@@ -258,7 +317,7 @@ public class Graph<I extends Comparable<I>, T> implements DirectedGraph<I, T>, I
 
     public static void main(String[] args) {
         Graph<String, String> g = new Graph<>();
-        g.addVertex("1", "a");
+        /*g.addVertex("1", "a");
         g.addVertex("2", "b");
         g.addVertex("3", "c");
         g.addVertex("4", "d");
@@ -268,9 +327,35 @@ public class Graph<I extends Comparable<I>, T> implements DirectedGraph<I, T>, I
         g.addConnection("3", "4", "R", 2);
         g.addConnection("4", "2", "R", -1);
         /*g.addConnection("b", "d", "R", 3);
-        g.addConnection("d", "b", "R", 3);*/
+        g.addConnection("d", "b", "R", 3);
         System.out.println(g.Kruskal());
-        System.out.println(g.floydWarshall());
+        System.out.println(g.floydWarshall());*/
+
+        g.addVertex("SF", "SF");
+        g.addVertex("CH", "CH");
+        g.addVertex("DE", "DE");
+        g.addVertex("NY", "NY");
+        g.addVertex("AT", "AT");
+        g.addConnection("SF", "NY", "R", 2000);
+        g.addConnection("NY", "SF", "R", 2000);
+        g.addConnection("SF", "AT", "R", 2200);
+        g.addConnection("AT", "SF", "R", 2200);
+        g.addConnection("NY", "AT", "R", 800);
+        g.addConnection("AT", "NY", "R", 800);
+        g.addConnection("NY", "CH", "R", 1000);
+        g.addConnection("CH", "NY", "R", 1000);
+        g.addConnection("NY", "DE", "R", 1600);
+        g.addConnection("DE", "NY", "R", 1600);
+        g.addConnection("DE", "SF", "R", 900);
+        g.addConnection("SF", "DE", "R", 900);
+        g.addConnection("SF", "CH", "R", 1200);
+        g.addConnection("CH", "SF", "R", 1200);
+        g.addConnection("DE", "CH", "R", 1300);
+        g.addConnection("CH", "DE", "R", 1300);
+        g.addConnection("AT", "CH", "R", 700);
+        g.addConnection("CH", "AT", "R", 700);
+
+        g.prim("AT");
     }
 }
 

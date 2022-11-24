@@ -7,7 +7,7 @@ public class Enemy implements Moveable{
 
     private Vertex<String, Moveable> position;
 
-    private Graph<String, Moveable> map;
+    private DirectedGraph<String, Moveable> map;
     
     private Vertex<String, Moveable> goal = null;
 
@@ -30,7 +30,7 @@ public class Enemy implements Moveable{
 
     public void updatePath(){
         path.clear();
-        Vertex<String, Moveable> pPos = map.containerOf(Player.getInstance());
+        Vertex<String, Moveable> pPos = (Vertex<String, Moveable>) map.containerOf(Player.getInstance());
         if(goal!=pPos){
             goal = pPos;
             path = (Stack<Vertex<String, Moveable>>) map.dijktraPath(position.getId(), pPos.getId());
@@ -38,7 +38,7 @@ public class Enemy implements Moveable{
         System.out.println(path);
     }
 
-    public void setMap(Graph<String, Moveable> map) {
+    public void setMap(DirectedGraph<String, Moveable> map) {
         this.map = map;
     }
     public void setPosition(Vertex<String, Moveable> position) {

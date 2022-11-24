@@ -5,10 +5,10 @@ import javax.swing.JOptionPane;
 
 public class Controller {
     
-    private Graph<String, Moveable> stage = new Graph<>();
+    private MatrixGraph<String, Moveable> stage = new MatrixGraph<>();
     public static void main(String[] args) {
-        //Graph<String, Moveable> trial = new Graph<>();
-        /*Enemy.getInstance().setMap(trial);
+        /*MatrixGraph<String, Moveable> trial = new MatrixGraph<>();
+        Enemy.getInstance().setMap(trial);
         trial.addVertex("1", Enemy.getInstance());
         Enemy.getInstance().setPosition(trial.searchVertex("1"));
         trial.addVertex("2", null);
@@ -63,10 +63,10 @@ public class Controller {
                 for(int j=0; j<size; j++){
                     Vertex<String, Moveable> m = stage.searchVertex(i + "," + j);
                     if(template[i][j]!=0){
-                        if(i>0&&template[i-1][j]!=0) m.setUp(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex((i-1) + "," + j), template[i-1][j]));
-                        if(i<size-1&&template[i+1][j]!=0) m.setDown(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex((i+1) + "," + j), template[i+1][j]));
-                        if(j>0&&template[i][j-1]!=0) m.setLeft(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex(i + "," + (j-1)), template[i][j-1]));
-                        if(j<size-1&&template[i][j+1]!=0) m.setRight(new Pair<Vertex<String, Moveable>, Integer>(stage.searchVertex(i + "," + (j+1)), template[i][j+1]));
+                        if(i>0&&template[i-1][j]!=0) stage.addConnection(i + "," + j, (i-1) + "," + j, "U", template[i-1][j]);
+                        if(i<size-1&&template[i+1][j]!=0) stage.addConnection(i + "," + j, (i+1) + "," + j, "D", template[i+1][j]);
+                        if(j>0&&template[i][j-1]!=0) stage.addConnection(i + "," + j, i + "," + (j-1), "L", template[i][j-1]);
+                        if(j<size-1&&template[i][j+1]!=0) stage.addConnection(i + "," + j, i + "," + (j+1), "R", template[i][j+1]);
                     }
                     m.setType(template[i][j]);
                 }
