@@ -1,6 +1,5 @@
 package game.ui;
 
-import game.model.Avatar;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 

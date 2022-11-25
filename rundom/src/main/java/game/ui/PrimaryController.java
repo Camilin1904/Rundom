@@ -55,7 +55,7 @@ public class PrimaryController implements Initializable {
     @FXML
     void press(ActionEvent event) {
         Rundom.showWindow("canvasView.fxml");
-        controler.insert(playerNickname.getText(),0);
+        controler.insert(controler.getActual());
         controler.inorder();
         Stage current = (Stage) playerNickname.getScene().getWindow();
         current.hide();

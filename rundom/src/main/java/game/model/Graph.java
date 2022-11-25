@@ -12,8 +12,6 @@ public interface Graph<I, T>{
 
     public void addValue(I id, T value);
 
-    public T search(I id);
-
     public void BFS(I s);
 
     public void DFS();

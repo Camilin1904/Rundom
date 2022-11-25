@@ -1,13 +1,19 @@
 package game.model;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 public class Controller {
     private Player player;
+
+    private Player actual;
     
     private MatrixGraph<String, Moveable> stage = new MatrixGraph<>();
+
+    private ArrayList<String> orderedList;
+
     public static void main(String[] args) {
         /*MatrixGraph<String, Moveable> trial = new MatrixGraph<>();
         Enemy.getInstance().setMap(trial);
@@ -45,7 +51,7 @@ public class Controller {
      */
     public int[][] createScenario(int size, double genConst){
         stage.clear();
-        Enemy.getInstance().setTarget(player);
+        Enemy.getInstance().setTarget(actual);
         boolean check = true;
         String k = "";
         int[][] template = new int[size][size];
@@ -99,7 +105,7 @@ public class Controller {
         while (!proceed){
             System.out.println("i");
             if(template[i][j]!=0&&stage.searchVertex(i + "," + j).getValue()!=Enemy.getInstance()) {
-                stage.addValue(i + "," + j, player);
+                stage.addValue(i + "," + j, actual);
                 proceed = true;
             }
             if(!proceed){
@@ -153,12 +159,11 @@ public class Controller {
         }
     }*/
     //ABB
-    public void insert(String name,double points){
-        Player n=new Player(name,points);
+    public void insert(Player newP){
         if(player==null){
-            player=n;
+            player=newP;
         }else{
-            insert(n,player);
+            insert(newP,player);
         }
     }
     private void insert(Player input,Player current){
@@ -185,9 +190,11 @@ public class Controller {
             return;
         }
     }
-    public void inorder(){
-
+    public ArrayList<String> inorder(){
+        orderedList = new ArrayList<>();
         inorder(player);
+
+        return orderedList;
 
     }
     private void inorder(Player current){
@@ -195,8 +202,16 @@ public class Controller {
             return;
         }
         inorder(current.getLeft());
-        System.out.println(current.getName()+": "+current.getScore());
+        orderedList.add(current.getName()+": "+current.getScore());
         inorder(current.getRight());
+    }
+
+    public Player getActual() {
+        return actual;
+    }
+
+    public void setActual(Player actual) {
+        this.actual = actual;
     }
 
 }

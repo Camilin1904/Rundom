@@ -1,6 +1,5 @@
-package game.model;
+package game.ui;
 
-import game.ui.Rundom;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
