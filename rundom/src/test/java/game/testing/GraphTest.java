@@ -3,10 +3,9 @@ package game.testing;
 import java.util.HashMap;
 
 import game.model.*;
-
 import junit.framework.TestCase;
 
-public class GraphTest extends TestCase{
+public class GraphTest extends TestCase {
     
     private ListGraph<String, Integer> test;
     private MatrixGraph<String, Integer> test2;

@@ -4,6 +4,7 @@ import java.util.Stack;
 
 @SuppressWarnings("unchecked")
 public class Enemy implements Moveable{
+    private Player target;
 
     private Vertex<String, Moveable> position;
 
@@ -28,14 +29,22 @@ public class Enemy implements Moveable{
         return goal.getDistance();
     }
 
-    public void updatePath(){
+   public void updatePath(){
         path.clear();
-        Vertex<String, Moveable> pPos = (Vertex<String, Moveable>) map.containerOf(Player.getInstance());
+        Vertex<String, Moveable> pPos = (Vertex<String, Moveable>) map.containerOf(target);
         if(goal!=pPos){
             goal = pPos;
             path = (Stack<Vertex<String, Moveable>>) map.dijktraPath(position.getId(), pPos.getId());
         }
         System.out.println(path);
+    }
+
+    public Player getTarget() {
+        return target;
+    }
+
+    public void setTarget(Player target) {
+        this.target = target;
     }
 
     public void setMap(Graph<String, Moveable> map) {

@@ -293,35 +293,33 @@ public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Itera
 
 
 
-    public TreeSet<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> Kruskal(){
+    public TreeSet<Edge<I,T>> Kruskal(){
         UnionFind<Vertex<I,T>> u = new UnionFind<>();
         for(Vertex<I,T> item : this){
             u.makeSet(item);
         }
-        ArrayList<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> edges = new ArrayList<>();
+        ArrayList<Edge<I,T>> edges = new ArrayList<>();
         for (Vertex<I,T> item : this){
               for (Pair<Vertex<I,T>,Integer> i : item.getAdyacentVertex()){
-                edges.add(new Pair<>(new Pair<>(item, i.getA()), i.getB()));
+                edges.add(new Edge<>(item, i.getA(), i.getB()));
             }
         }
-        edges.sort(new Comparator<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>>() {
+        edges.sort(new Comparator<Edge<I,T>>() {
             @Override
-            public int compare(Pair<Pair<Vertex<I, T>, Vertex<I, T>>, Integer> o1,
-                    Pair<Pair<Vertex<I, T>, Vertex<I, T>>, Integer> o2) {
-                return o1.getB().compareTo(o2.getB());
+            public int compare(Edge<I,T> o1, Edge<I,T> o2) {
+                return o1.getWeight().compareTo(o2.getWeight());
             }
         });
-        TreeSet<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>> A = new TreeSet<>(new Comparator<Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer>>(){
+        TreeSet<Edge<I,T>> A = new TreeSet<>(new Comparator<Edge<I,T>>(){
             @Override
-            public int compare(Pair<Pair<Vertex<I, T>, Vertex<I, T>>, Integer> o1,
-                    Pair<Pair<Vertex<I, T>, Vertex<I, T>>, Integer> o2) {
+            public int compare(Edge<I,T> o1, Edge<I,T> o2) {
                 return o1.equals(o2)?0:1;
             }
         });
-        for(Pair<Pair<Vertex<I,T>, Vertex<I,T>>, Integer> i : edges){
-            if(u.find(i.getA().getA())!=u.find(i.getA().getB())){
+        for(Edge<I,T> i : edges){
+            if(u.find(i.getA())!=u.find(i.getB())){
                 A.add(i);
-                u.union(i.getA().getA(), i.getA().getB());
+                u.union(i.getA(), i.getB());
             }
         }
 
