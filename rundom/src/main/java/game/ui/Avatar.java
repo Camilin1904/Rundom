@@ -1,10 +1,12 @@
 package game.ui;
 
+import game.model.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BackgroundImage;
 
+@SuppressWarnings("unchecked")
 public class Avatar {
 
     private Canvas canvas;
@@ -18,7 +20,7 @@ public class Avatar {
     private int hBound = 0;
     private int vBound = 6;
 
-    
+    private Moveable characterInside;
 
 
     public Avatar(Canvas canvas){
@@ -26,14 +28,13 @@ public class Avatar {
         gc = canvas.getGraphicsContext2D();
         String uri = "file:"+ Rundom.class.getResource("nessfuzzy.png").getPath();
         tank = new Image(uri);
-
         pos = new Vector(200,200);
     }
 
     public void draw(){
         gc.save();
-        gc.translate(pos.x, pos.y);
-        gc.drawImage(tank, -200,10, 70,70);
+        //gc.translate(pos.x, pos.y);
+        gc.drawImage(tank, pos.x,pos.y, 70,70);
         gc.restore();
     }
 
@@ -44,32 +45,35 @@ public class Avatar {
 
 
     public void moveUp(){
-        if (vBound < 9) {
             pos.y -= 70;
-            vBound++;
-        }
     }
     public void moveDown(){
-        if(vBound > 0){
             pos.y += 70;
-            vBound--;
-        }
     }
     public void moveLeft(){
-        if(hBound > 0){
+
             pos.x -= 70;
-            hBound--;
-        }
     }
     public void moveRight(){
-        if (hBound < 9){
             pos.x += 70;
-            hBound++;
-        }
+    }
+    public String move(String dir){
+        return characterInside.move(dir);
     }
 
     public Vector getPos() {
         return pos;
+    }
+
+    public void setCharacterInside(Moveable characterInside) {
+        this.characterInside = characterInside;
+        String coord = ((Vertex<String,Moveable>) characterInside.getPosition()).toString();
+        pos.y = Integer.parseInt(coord.charAt(0) + "")*70;
+        pos.x = Integer.parseInt(coord.charAt(2) + "")*70;
+    }
+
+    public Moveable getCharacterInside() {
+        return characterInside;
     }
 
 

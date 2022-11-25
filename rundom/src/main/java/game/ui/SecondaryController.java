@@ -3,6 +3,8 @@ package game.ui;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 
+import game.model.*;
+
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,6 +15,8 @@ import javafx.scene.input.KeyEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import game.model.Enemy;
+
 public class SecondaryController implements Initializable {
 
     @FXML
@@ -21,6 +25,9 @@ public class SecondaryController implements Initializable {
     private GraphicsContext gc;
     private boolean isRunning = true;
     private Image bg;
+    private Image wall;
+
+    private int[][] template;
 
 
     //Elementos gráficos
@@ -37,29 +44,37 @@ public class SecondaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        template = Rundom.ctrl.createScenario(10, 1.6);
+        Rundom.ctrl.generateKeyPositions(3);
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
-
+        avatar = new Avatar(canvas);
+        avatar.setCharacterInside(Rundom.ctrl.getActual());
         canvas.setOnKeyPressed(this::onKeyPressed);
 
-        avatar = new Avatar(canvas);
         draw();
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
         System.out.println(keyEvent.getCode());
         if(keyEvent.getCode() == KeyCode.W){
-            avatar.moveUp();
+            if(avatar.move("U")!=null) avatar.moveUp();
+            
         }
         if(keyEvent.getCode() == KeyCode.A){
-           avatar.moveLeft();
+           if(avatar.move("L")!=null)avatar.moveLeft();
+           
         }
         if(keyEvent.getCode() == KeyCode.S){
-            avatar.moveDown();
+            if(avatar.move("D")!=null) avatar.moveDown();
+            
         }
         if(keyEvent.getCode() == KeyCode.D){
-           avatar.moveRight();
+           if(avatar.move("R")!=null)avatar.moveRight();
+           
         }
+        Enemy.getInstance().updatePath();
+        System.out.println(((Player)avatar.getCharacterInside()).getPosition());
     }
 
     public void draw(){
@@ -70,13 +85,13 @@ public class SecondaryController implements Initializable {
                         Platform.runLater(()->{
 
 
-                            avatar.draw();
                             drawBackground();
                             avatar.draw();
+                            drawWalls();
                         });
                         //Sleep
                         try {
-                            Thread.sleep(17);
+                            Thread.sleep(100);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -89,10 +104,26 @@ public class SecondaryController implements Initializable {
 
         String uri2 = "file:"+ Rundom.class.getResource("suelo.png").getPath();
         bg = new Image(uri2);
-            gc.save();
-            gc.drawImage(bg, 0,0, 700,700);
-            gc.restore();
+        gc.save();
+        gc.drawImage(bg, 0,0, 700,700);
+        gc.restore();
 
+    }
+    
+    public void drawWalls(){
+        new Thread(()->{
+            for(int i = 0; i<10; i++){
+                for(int e=0; e<10; e++){
+                    if(template[i][e]==0){
+                        String uri3 = "file:"+ Rundom.class.getResource("cc.png").getPath();
+                        wall = new Image(uri3);
+                        gc.save();
+                        gc.drawImage(wall, e, i, 70, 70);
+                        gc.restore();
+                    }
+                }
+            }
+        });
     }
 
 }

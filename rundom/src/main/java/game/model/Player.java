@@ -49,13 +49,13 @@ public class Player implements Moveable{
         this.score = score;
     }
 
-    public int move(String dir){
+    public String move(String dir){
         this.dir = dir;
         return move();
     }
 
     @Override
-    public int move() {
+    public String move() {
         Pair<Vertex<String, Moveable>,Integer> newPos = null;
         switch(dir){
             case ("R"):
@@ -88,8 +88,9 @@ public class Player implements Moveable{
                 break;
 
         }
-        return newPos!=null?newPos.getB():-1;
+        return newPos!=null?newPos.getB().toString():null;
     }
+
     public Vertex<String, Moveable> getPosition() {
         return position;
     }

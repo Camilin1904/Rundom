@@ -20,13 +20,39 @@ public class Enemy implements Moveable{
         path = new Stack<>();
     }
     
-    public int move(){
+    public String move(){
         updatePath();
         
         position.setValue(null);
-        position = path.pop();
-        position.setValue(instance);
-        return goal.getDistance();
+        String returnS = null;
+        Vertex<String, Moveable> newPos = !path.isEmpty()?path.pop(): position;
+        
+        if(newPos.getValue()==null){
+            String r = position.getRight().toString();
+            String l = position.getLeft().toString();
+            String u = position.getUp().toString();
+            String d = position.getDown().toString();
+            if(newPos.toString().equals(r)){
+                    returnS = "R";
+            }
+            else if(newPos.toString().equals(l)){
+                    returnS = "L";
+            }
+            else if(newPos.toString().equals(u)){
+                returnS = "U";
+            }
+            else if(newPos.toString().equals(d)){
+                    returnS = "D";
+            }
+    
+            position = newPos;
+        }
+        
+        return returnS;
+    }
+
+    public String move(String dir){
+        return move();
     }
 
    public void updatePath(){
@@ -55,5 +81,11 @@ public class Enemy implements Moveable{
     }
     public static Enemy getInstance() {
         return instance;
+    }
+    public Stack<Vertex<String, Moveable>> getPath() {
+        return path;
+    }
+    public Vertex<String, Moveable> getPosition() {
+        return position;
     }
 }

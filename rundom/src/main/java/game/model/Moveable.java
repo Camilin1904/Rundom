@@ -1,5 +1,7 @@
 package game.model;
 
 public interface Moveable {
-    public int move();
+    public String move();
+    public String move(String dir);
+    public Object getPosition();
 }

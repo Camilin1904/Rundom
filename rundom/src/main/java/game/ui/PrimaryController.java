@@ -31,6 +31,8 @@ public class PrimaryController implements Initializable {
     @FXML
     private Image bg;
     @FXML
+    private Image wall;
+    @FXML
     private Canvas canvas;
 
 
@@ -54,7 +56,10 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void press(ActionEvent event) {
+        controler.setActual(new Player(playerNickname.getText(), 0));
+        //controler.createScenario(10, 1.6);
         Rundom.showWindow("canvasView.fxml");
+
         controler.insert(controler.getActual());
         controler.inorder();
         Stage current = (Stage) playerNickname.getScene().getWindow();

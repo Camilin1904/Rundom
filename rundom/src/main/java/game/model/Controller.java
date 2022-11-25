@@ -35,7 +35,7 @@ public class Controller {
         c.createScenario(3, 1.6);
 
         Enemy.getInstance().updatePath();
-        Arrays.toString(c.generateKeyPositions(3));
+        System.out.println(Arrays.toString(c.generateKeyPositions(3)));
 
     }
 
@@ -107,17 +107,19 @@ public class Controller {
 
             check = stage.checkConexivity(u.getId());
         }
-        int i = (int)(Math.random()*size),j = (int)(Math.random()*size);
+        int i = (int)(rand.nextDouble()*size),j = (int)(rand.nextDouble()*size);
         boolean proceed = false;
         while (!proceed){
             System.out.println("i");
             if(template[i][j]!=0&&stage.searchVertex(i + "," + j).getValue()!=Enemy.getInstance()) {
                 stage.addValue(i + "," + j, actual);
+                actual.setPosition(stage.searchVertex(i + "," + j));
+                System.out.println(i + "," + j);
                 proceed = true;
             }
             if(!proceed){
-                i = (int)(Math.random()*size);
-                j = (int)(Math.random()*size);
+                i = (int)(rand.nextDouble()*size);
+                j = (int)(rand.nextDouble()*size);
             }
         }
         return template;
