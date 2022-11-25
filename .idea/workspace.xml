@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8d96bb10-dbd6-4ad9-a93f-9aab3ae1b747" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/rundom/src/main/java/game/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/src/main/java/game/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/src/main/java/game/ui/PrimaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/src/main/java/game/ui/PrimaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/src/main/resources/game/ui/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/src/main/resources/game/ui/primary.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Edge.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Edge.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Enemy.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Enemy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Graph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Pair.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Pair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/UnionFind.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/UnionFind.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Vertex.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Vertex.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/Avatar.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/Avatar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/PrimaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/PrimaryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/Rundom.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/Rundom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/SecondaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/SecondaryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/Vector.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/Vector.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/primary.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/module-info.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2I0nhTOHIrLOb7M3C1J12BLwuVP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/santy/OneDrive/Documents/Icesi/SEMESTRE-3/APO/PipeManiaLastLastLast&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.ti3intro" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="game.model" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.game.ui.Rundom">
+    <configuration name="Rundom" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.ti3intro.Rundom" />
+      <module name="LaPutaMadre" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.ti3intro.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="game.ui.Rundom" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="game.ui.Rundom" />
+      <module name="rundom" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.ui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.game.ui.Rundom" />
+        <item itemvalue="Application.Rundom" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8d96bb10-dbd6-4ad9-a93f-9aab3ae1b747" name="Changes" comment="" />
+      <created>1669327491395</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1669327491395</updated>
+      <workItem from="1669327493668" duration="6761000" />
+      <workItem from="1669409599326" duration="6475000" />
+      <workItem from="1669417701294" duration="1259000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
