@@ -1,4 +1,4 @@
-package game.model;
+package game.ui;
 
 public class Vector {
 

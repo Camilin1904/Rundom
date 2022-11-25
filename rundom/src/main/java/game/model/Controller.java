@@ -1,8 +1,7 @@
 package game.model;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import javax.swing.JOptionPane;
 
 public class Controller {
@@ -13,6 +12,8 @@ public class Controller {
     private MatrixGraph<String, Moveable> stage = new MatrixGraph<>();
 
     private ArrayList<String> orderedList;
+
+    private Random rand = new Random(System.currentTimeMillis());
 
     public static void main(String[] args) {
         /*MatrixGraph<String, Moveable> trial = new MatrixGraph<>();
@@ -34,7 +35,7 @@ public class Controller {
         c.createScenario(3, 1.6);
 
         Enemy.getInstance().updatePath();
-
+        Arrays.toString(c.generateKeyPositions(3));
 
     }
 
@@ -52,18 +53,18 @@ public class Controller {
     public int[][] createScenario(int size, double genConst){
         stage.clear();
         Enemy.getInstance().setTarget(actual);
-        boolean check = true;
+        boolean check = false;
         String k = "";
         int[][] template = new int[size][size];
-        while(check){
+        while(!check){
             Enemy.getInstance().setMap(stage);
 
             for(int i=0; i<size; i++){
                 for (int j=0; j<size; j++){
-                    template[i][j] = (int)Math.round(Math.random()*genConst);
+                    template[i][j] = (int)Math.round(rand.nextDouble()*genConst);
                     stage.addVertex(i + "," + j, null);
                 }
-                //System.out.println(Arrays.toString(template[i]));
+                System.out.println(Arrays.toString(template[i]));
                 k += Arrays.toString(template[i]) + "\n ";
             }
     
@@ -81,7 +82,7 @@ public class Controller {
                     m.setType(template[i][j]);
                 }
             }
-            int i = (int)(Math.random()*size),j = (int)(Math.random()*size);
+            int i = (int)(rand.nextDouble()*size),j = (int)(rand.nextDouble()*size);
             boolean proceed = false;
             Vertex<String, Moveable> u = null;
             while (!proceed){
@@ -93,8 +94,14 @@ public class Controller {
                     proceed = true;
                 }
                 if(!proceed){
-                    i = (int)Math.random()*size;
-                    j = (int)Math.random()*size;
+                    double l = 0;
+                    l = rand.nextDouble();
+                    l = l*size-0.01;
+                    i = ((int)l);
+                    l = rand.nextDouble();
+                    l = l*size;
+                    j = (int)l;
+                    if(i==0&&j==0)rand = new Random(System.currentTimeMillis());
                 }
             }
 
@@ -115,6 +122,21 @@ public class Controller {
         }
         return template;
 
+    }
+
+    public String[] generateKeyPositions(int numKeys){
+        int keyNum = 0;
+        String[] keys = new String[numKeys];
+        while(keyNum<numKeys){
+            for(Vertex<String,Moveable> item : stage){
+                if(Math.random()>0.95&&keyNum<numKeys){
+                    item.setHasKey(true);
+                    keys[keyNum] = item.getId();
+                    keyNum++;
+                }
+            }
+        }
+        return keys;
     }
     //DATA
     /*public void loadData(){

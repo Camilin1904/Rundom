@@ -340,6 +340,8 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
 
     public void clear(){
         vertexCollection.clear();
+        aux.clear();
+        adyacenseMatrix.clear();
     }
     public static void main(String[] args) {
         

@@ -72,6 +72,7 @@ public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Itera
 
     public void clear(){
         vertexCollection.clear();
+        aux.clear();
     }
 
     public void BFS(I s){

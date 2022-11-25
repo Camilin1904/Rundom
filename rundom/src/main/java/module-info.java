@@ -5,4 +5,5 @@ module game.ui {
 
     opens game.ui to javafx.fxml;
     exports game.ui;
+    exports game.model;
 }

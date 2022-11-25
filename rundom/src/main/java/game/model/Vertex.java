@@ -17,16 +17,19 @@ public class Vertex<I extends Comparable<I>, T> implements Comparable<Vertex<I,T
     private int end;
     private int type = 1;
     private int oCol;
+    private boolean hasKey;
     
     public Vertex(T value){
         this.value = value;
         adyacentVertex = new ArrayList<>();
+        hasKey = false;
     }
 
     public Vertex(I id, T value){
         this.id = id;
         this.value = value;
         adyacentVertex = new ArrayList<>();
+        hasKey = false;
     }
 
     public void setValue(T value) {
@@ -138,6 +141,13 @@ public class Vertex<I extends Comparable<I>, T> implements Comparable<Vertex<I,T
     }
     public void setoCol(int oCol) {
         this.oCol = oCol;
+    }
+
+    public void setHasKey(boolean hasKey) {
+        this.hasKey = hasKey;
+    }
+    public boolean getHasKey(){
+        return hasKey;
     }
 
 }

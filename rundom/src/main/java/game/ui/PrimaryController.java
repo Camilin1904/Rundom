@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PrimaryController implements Initializable {
-    private Controller controler=new Controller();
+    private Controller controler= Rundom.ctrl;
     @FXML
     private Label welcomeText;
     @FXML

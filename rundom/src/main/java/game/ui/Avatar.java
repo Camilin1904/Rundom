@@ -18,6 +18,8 @@ public class Avatar {
     private int hBound = 0;
     private int vBound = 6;
 
+    
+
 
     public Avatar(Canvas canvas){
         this.canvas = canvas;

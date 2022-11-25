@@ -1,6 +1,6 @@
 package game.ui;
 
-
+import game.model.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class Rundom extends Application {
 
+    public static Controller ctrl = new Controller();
+     
     @Override
     public void start(Stage stage) throws IOException {
         showWindow("primary.fxml");
