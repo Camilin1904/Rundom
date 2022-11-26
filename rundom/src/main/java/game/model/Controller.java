@@ -8,6 +8,8 @@ public class Controller {
     private Player player;
 
     private Player actual;
+
+    private Scoreboard sb = new Scoreboard();
     
     private MatrixGraph<String, Moveable> stage = new MatrixGraph<>();
 
@@ -182,38 +184,6 @@ public class Controller {
             e.printStackTrace();
         }
     }*/
-    //ABB
-    public void insert(Player newP){
-        if(player==null){
-            player=newP;
-        }else{
-            insert(newP,player);
-        }
-    }
-    private void insert(Player input,Player current){
-        if(input.getScore()< current.getScore()){
-            //Left
-            if(current.getLeft()!=null){
-                insert(input,current.getLeft());
-            }else{
-                current.setLeft(input);
-            }
-        }
-        else if(input.getScore()>current.getScore()){
-            //Right
-            if(current.getRight()!=null){
-                insert(input,current.getRight());
-            }else{
-                current.setRight(input);
-            }
-        }else{
-            //Equal
-            Player aux = current.getLeft();
-            current.setLeft(input);
-            input.setLeft(aux);
-            return;
-        }
-    }
     public ArrayList<String> inorder(){
         orderedList = new ArrayList<>();
         inorder(player);
@@ -238,4 +208,15 @@ public class Controller {
         this.actual = actual;
     }
 
+    public ArrayList<Pair<String, Double>> updateLeaderboard(){
+        return sb.printScore(sb.getRoot(), 1);
+    }
+
+    public void insert(Player current) {
+        if (sb.getRoot() == null) {
+            sb.setRoot(current);
+        } else {
+            sb.insert(current, sb.getRoot());
+        }
+    }
 }
