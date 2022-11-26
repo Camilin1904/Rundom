@@ -2,7 +2,7 @@ package game.model;
 
 import java.util.*;
 
-public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iterable<Vertex<I, T>>{
+public class MatrixGraph<I extends Comparable<I>, T> extends VertexGraph<I, T>{
 
     private HashMap<I, HashMap<I, Integer>> adyacenseMatrix;
     private HashMap<I,Vertex<I,T>> vertexCollection;
@@ -66,13 +66,17 @@ public class MatrixGraph<I extends Comparable<I>, T> implements Graph<I,T>, Iter
         aux.put(value, searchVertex(id));
     }
 
+    @Override
     public Vertex<I, T> searchVertex(I id){
         return vertexCollection.get(id);
     }
 
     @Override
     public Vertex<I, T> containerOf(T value){
-        return aux.get(value);
+        for(Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            if(i.getValue().getValue()!=null&&i.getValue().getValue().equals(value))return i.getValue();
+        }
+        return null;
     }
 
     @Override

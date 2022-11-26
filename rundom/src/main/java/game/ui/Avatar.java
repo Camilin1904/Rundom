@@ -14,26 +14,21 @@ public class Avatar {
 
     private Image tank, bg;
 
-    private Vector pos;
-    private Vector direction;
-    private BackgroundImage bgImg;
-    private int hBound = 0;
-    private int vBound = 6;
+    protected Vector pos;
 
-    private Moveable characterInside;
+    protected Moveable characterInside;
 
 
-    public Avatar(Canvas canvas){
+    public Avatar(Canvas canvas, String image){
         this.canvas = canvas;
         gc = canvas.getGraphicsContext2D();
-        String uri = "file:"+ Rundom.class.getResource("nessfuzzy.png").getPath();
+        String uri = "file:"+ Rundom.class.getResource(image).getPath();
         tank = new Image(uri);
         pos = new Vector(200,200);
     }
 
     public void draw(){
         gc.save();
-        //gc.translate(pos.x, pos.y);
         gc.drawImage(tank, pos.x,pos.y, 70,70);
         gc.restore();
     }

@@ -2,21 +2,18 @@ package game.model;
 
 import java.util.*;
 
-public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Iterable<Vertex<I, T>>{
+public class ListGraph<I extends Comparable<I>, T> extends VertexGraph<I, T>{
 
     private HashMap<I, Vertex<I, T>> vertexCollection;
-    private HashMap<T, Vertex<I, T>> aux;
 
     public ListGraph(){
         vertexCollection = new HashMap<>();
-        aux = new HashMap<>();
     }
 
     @Override
     public void addVertex(I id, T toAdd) {
         Vertex<I, T> t = new Vertex<I, T>(id, toAdd);
         vertexCollection.put(id, t);
-        if(toAdd!=null) aux.put(toAdd, t);
     }
 
     public void addConnection(I pointer, I pointed, String direction, int weight) {
@@ -52,7 +49,6 @@ public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Itera
 
     public void addValue(I id, T toAdd){
         searchVertex(id).setValue(toAdd);
-        aux.put(toAdd, searchVertex(id));
     }
 
     @Override
@@ -62,17 +58,21 @@ public class ListGraph<I extends Comparable<I>, T> implements Graph<I, T>, Itera
         return things.iterator();
     }
 
+    @Override
     public Vertex<I, T> searchVertex(I id){
         return vertexCollection.get(id);
     }
 
+    @Override
     public Vertex<I, T> containerOf(T value){
-        return aux.get(value);
+        for(Map.Entry<I,Vertex<I,T>> i : vertexCollection.entrySet()){
+            if(i.getValue().getValue()!=null&&i.getValue().getValue().equals(value))return i.getValue();
+        }
+        return null;
     }
 
     public void clear(){
         vertexCollection.clear();
-        aux.clear();
     }
 
     public void BFS(I s){

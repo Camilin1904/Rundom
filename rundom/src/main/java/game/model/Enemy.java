@@ -27,11 +27,11 @@ public class Enemy implements Moveable{
         String returnS = null;
         Vertex<String, Moveable> newPos = !path.isEmpty()?path.pop(): position;
         
-        if(newPos.getValue()==null){
-            String r = position.getRight().toString();
-            String l = position.getLeft().toString();
-            String u = position.getUp().toString();
-            String d = position.getDown().toString();
+        if(newPos!=null&&(newPos.getValue()==null||newPos.getValue()==target)){
+            String r = position.getRight()!=null?position.getRight().toString():"";
+            String l = position.getLeft()!=null?position.getLeft().toString():"";
+            String u = position.getUp()!=null?position.getUp().toString():"";
+            String d = position.getDown()!=null?position.getDown().toString():"";
             if(newPos.toString().equals(r)){
                     returnS = "R";
             }
@@ -44,10 +44,19 @@ public class Enemy implements Moveable{
             else if(newPos.toString().equals(d)){
                     returnS = "D";
             }
-    
+            for(Pair<Vertex<String, Moveable>,Integer> i : position.getAdyacentVertex()){
+                if(i.getA()==newPos){
+                    if(i.getB()==2) returnS += "2";
+                }
+                break;
+            }
+            if (newPos.getValue()!=null&&newPos.getValue().equals(target)){
+                returnS = "y";
+            }
             position = newPos;
         }
         
+        position.setValue(instance);
         return returnS;
     }
 
@@ -56,9 +65,9 @@ public class Enemy implements Moveable{
     }
 
    public void updatePath(){
-        path.clear();
         Vertex<String, Moveable> pPos = (Vertex<String, Moveable>) map.containerOf(target);
         if(goal!=pPos){
+            path.clear();
             goal = pPos;
             path = (Stack<Vertex<String, Moveable>>) map.dijktraPath(position.getId(), pPos.getId());
         }

@@ -9,11 +9,13 @@ public class Controller {
 
     private Player actual;
     
-    private MatrixGraph<String, Moveable> stage = new MatrixGraph<>();
+    private VertexGraph<String, Moveable> stage = new MatrixGraph<>();
 
     private ArrayList<String> orderedList;
 
     private Random rand = new Random(System.currentTimeMillis());
+
+    private int[][] temp;
 
     public static void main(String[] args) {
         /*MatrixGraph<String, Moveable> trial = new MatrixGraph<>();
@@ -111,7 +113,7 @@ public class Controller {
         boolean proceed = false;
         while (!proceed){
             System.out.println("i");
-            if(template[i][j]!=0&&stage.searchVertex(i + "," + j).getValue()!=Enemy.getInstance()) {
+            if(template[i][j]!=0&&(stage.searchVertex(i + "," + j)).getValue()!=Enemy.getInstance()) {
                 stage.addValue(i + "," + j, actual);
                 actual.setPosition(stage.searchVertex(i + "," + j));
                 System.out.println(i + "," + j);
@@ -122,6 +124,7 @@ public class Controller {
                 j = (int)(rand.nextDouble()*size);
             }
         }
+        temp = template;
         return template;
 
     }
@@ -131,7 +134,7 @@ public class Controller {
         String[] keys = new String[numKeys];
         while(keyNum<numKeys){
             for(Vertex<String,Moveable> item : stage){
-                if(Math.random()>0.95&&keyNum<numKeys){
+                if(temp[Integer.parseInt(item.getId().charAt(0) + "")][Integer.parseInt(item.getId().charAt(2) + "")]!=0&&Math.random()>0.95&&keyNum<numKeys){
                     item.setHasKey(true);
                     keys[keyNum] = item.getId();
                     keyNum++;
@@ -236,6 +239,9 @@ public class Controller {
 
     public void setActual(Player actual) {
         this.actual = actual;
+    }
+    public VertexGraph<String, Moveable> getStage() {
+        return stage;
     }
 
 }

@@ -1,7 +1,6 @@
 package game.model;
 
 public class Player implements Moveable{
-    //private static Player instance = new Player();
     private String dir;
     private String name;
     private double score;
@@ -10,11 +9,14 @@ public class Player implements Moveable{
     private Player left;
     private Vertex<String, Moveable> position;
 
+    private Score posScore;
+
 
 
     public Player (String name, double score) {
         this.name=name;
         this.score=score;
+        posScore = new Score();
     }
 
     public Player getRight() {
@@ -57,9 +59,12 @@ public class Player implements Moveable{
     @Override
     public String move() {
         Pair<Vertex<String, Moveable>,Integer> newPos = null;
+        String retrn;
+        boolean check = false;
         switch(dir){
             case ("R"):
                 if((newPos = position.getRight())!=null){
+                    check = newPos.getA().getValue()!=null;
                     position.setValue(null);
                     position = newPos.getA();
                     position.setValue(this);
@@ -67,6 +72,7 @@ public class Player implements Moveable{
                 break;
             case("L"):
                 if((newPos = position.getLeft())!=null){
+                    check = newPos.getA().getValue()!=null;
                     position.setValue(null);
                     position = newPos.getA();
                     position.setValue(this);
@@ -74,6 +80,7 @@ public class Player implements Moveable{
                 break;
             case("U"):
                 if((newPos = position.getUp())!=null){
+                    check = newPos.getA().getValue()!=null;
                     position.setValue(null);
                     position = newPos.getA();
                     position.setValue(this);
@@ -81,6 +88,7 @@ public class Player implements Moveable{
                 break;
             case("D"):
                 if((newPos = position.getDown())!=null){
+                    check = newPos.getA().getValue()!=null;
                     position.setValue(null);
                     position = newPos.getA();
                     position.setValue(this);
@@ -88,7 +96,12 @@ public class Player implements Moveable{
                 break;
 
         }
-        return newPos!=null?newPos.getB().toString():null;
+        if(position.getHasKey())position.setHasKey(false);
+        retrn = newPos!=null?newPos.getB().toString():null;
+        if(check){
+            retrn = "n";
+        }
+        return retrn;
     }
 
     public Vertex<String, Moveable> getPosition() {
@@ -97,4 +110,8 @@ public class Player implements Moveable{
     public void setPosition(Vertex<String, Moveable> position) {
         this.position = position;
     }
+    public Score getPosScore() {
+        return posScore;
+    }
+
 }
