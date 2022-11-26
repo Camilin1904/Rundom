@@ -48,7 +48,7 @@ public class SecondaryController implements Initializable {
     private EnemyAvatar enemyAvatar;
 
     private boolean gameState = false;
-    private boolean ending = true;
+    private boolean ending = false;
 
     private int numKeys = 3;
 
