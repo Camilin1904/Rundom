@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Rundom extends Application {
 
-    public static Controller ctrl = new Controller();
+    public static Controller ctrl;
      
     @Override
     public void start(Stage stage) throws IOException {

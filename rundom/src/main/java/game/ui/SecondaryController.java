@@ -94,7 +94,7 @@ public class SecondaryController implements Initializable {
         avatar = new Avatar(canvas, "nessfuzzy.png");
         switch(ctrl.getActual().getPosScore().getFloor()){
             case(1):
-                enemyAvatar = new EnemyAvatar(canvas, "Starman_Clay_Model.png");
+                enemyAvatar = new EnemyAvatar(canvas, "starman.png");
                 break;
             case(2):
                 enemyAvatar = new EnemyAvatar(canvas, "leel.png");
@@ -129,8 +129,8 @@ public class SecondaryController implements Initializable {
                     extraEnemies = new ArrayList<>();
                     enemyAvatar = new EnemyAvatar(canvas, "iceSi.png");
                     enemyAvatar.setCharacterInside(Enemy.getInstance());
-                    extraEnemies.add(new EnemyAvatar(canvas, "Starman_Clay_Model.png"));
-                    extraEnemies.add(new EnemyAvatar(canvas, "ness.png"));
+                    extraEnemies.add(new EnemyAvatar(canvas, "evilstarman.png"));
+                    extraEnemies.add(new EnemyAvatar(canvas, "evilfront.png"));
                     ArrayList<Enemy> exEn = ctrl.getExtraEnemies();
                     extraEnemies.get(0).setCharacterInside(exEn.get(0));
                     extraEnemies.get(1).setCharacterInside(exEn.get(1));

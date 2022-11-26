@@ -17,4 +17,9 @@ public class EnemyAvatar extends Avatar{
         pos.x = Integer.parseInt(coord.charAt(2) + "")*70;
         super.draw();
     }
+
+    /*@Override
+    public void move(){
+
+    }*/
 }

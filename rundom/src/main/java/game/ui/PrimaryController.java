@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -34,13 +35,15 @@ public class PrimaryController implements Initializable {
     private Image wall;
     @FXML
     private Canvas canvas;
+    @FXML
+    private ToggleButton modeSwitch;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
-        if(ctrl.getActual()!=null){
+        if(ctrl!=null&&ctrl.getActual()!=null){
             ctrl.getActual().setScore(ctrl.getActual().getPosScore().getFloor()*200 + ctrl.getActual().getPosScore().getRoom()*10);
             ctrl.getActual().clean();
             ctrl.insert(ctrl.getActual());
@@ -60,6 +63,8 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void press(ActionEvent event) {
+        Rundom.ctrl = new Controller(modeSwitch.isSelected());
+        ctrl = Rundom.ctrl;
         ctrl.setActual(new Player(playerNickname.getText(), 0));
         //ctrl.createScenario(10, 1.6);
         Rundom.showWindow("canvasView.fxml");

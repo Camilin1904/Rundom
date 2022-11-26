@@ -11,7 +11,7 @@ public class Controller {
 
     private Scoreboard sb = new Scoreboard();
     
-    private VertexGraph<String, Moveable> stage = new MatrixGraph<>();
+    private VertexGraph<String, Moveable> stage;
 
     private ArrayList<String> orderedList;
 
@@ -21,28 +21,11 @@ public class Controller {
 
     private ArrayList<Enemy> extraEnemies;
 
-    public static void main(String[] args) {
-        /*MatrixGraph<String, Moveable> trial = new MatrixGraph<>();
-        Enemy.getInstance().setMap(trial);
-        trial.addVertex("1", Enemy.getInstance());
-        Enemy.getInstance().setPosition(trial.searchVertex("1"));
-        trial.addVertex("2", null);
-        trial.addVertex("3", null);
-        trial.addVertex("4", Player.getInstance());
-        trial.addConnection("1", "4", "U", 9);
-        trial.addConnection("2", "1", "L", 1);
-        trial.addConnection("1", "2", "D", 3);
-        trial.addConnection("2", "3", "R", 4);
-        trial.addConnection("3", "4", "L", 1);
-
-        Enemy.getInstance().updatePath();*/
-
-        Controller c = new Controller();
-        c.createScenario(3, 1.6);
-
-        Enemy.getInstance().updatePath();
-        System.out.println(Arrays.toString(c.generateKeyPositions(3)));
-
+    public Controller(boolean type){
+        if(!type){
+            stage = new ListGraph<>();
+        }
+        else stage = new MatrixGraph<>();
     }
 
     /*/**
