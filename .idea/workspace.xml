@@ -5,24 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d96bb10-dbd6-4ad9-a93f-9aab3ae1b747" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/rundom/src/main/resources/game/ui/Starman_Clay_Model.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rundom/src/main/resources/game/ui/cc.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rundom/src/main/resources/game/ui/key.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/Starman_Clay_Model.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/cc.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/key.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rundom/src/main/java/game/model/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/src/main/java/game/model/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rundom/src/main/java/game/model/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/src/main/java/game/model/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rundom/src/main/java/game/model/Moveable.java" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/src/main/java/game/model/Moveable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rundom/src/main/java/game/ui/Avatar.java" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/src/main/java/game/ui/Avatar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rundom/src/main/java/game/ui/SecondaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/src/main/java/game/ui/SecondaryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Edge.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Edge.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Enemy.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Enemy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Moveable.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Moveable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Graph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/ListGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/MatrixGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Pair.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Pair.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Score.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Score.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Scoreboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Scoreboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/UnionFind.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/UnionFind.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/Vertex.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/Vertex.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/model/VertexGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/model/VertexGraph.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/Avatar.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/Avatar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/EnemyAvatar.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/EnemyAvatar.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/PrimaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/PrimaryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/Rundom.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/Rundom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/ScoreController.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/ScoreController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/SecondaryController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/SecondaryController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/SecondaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/SecondaryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/game/ui/Vector.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/game/ui/Vector.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rundom/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/rundom/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,14 +69,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/santy/OneDrive/Documents/Icesi/SEMESTRE-3/APO/PipeManiaLastLastLast&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/santy/OneDrive/Documents/Icesi/SEMESTRE-3/Rundom/rundom/Rundom"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.ti3intro" />
@@ -115,6 +131,7 @@
       <workItem from="1669327493668" duration="6761000" />
       <workItem from="1669409599326" duration="6475000" />
       <workItem from="1669417701294" duration="11255000" />
+      <workItem from="1669442618734" duration="2874000" />
     </task>
     <servers />
   </component>
