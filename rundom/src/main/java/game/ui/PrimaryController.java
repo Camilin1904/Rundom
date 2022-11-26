@@ -43,11 +43,6 @@ public class PrimaryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
-        if(ctrl!=null&&ctrl.getActual()!=null){
-            ctrl.getActual().setScore(ctrl.getActual().getScore() + ctrl.getActual().getPosScore().getFloor()*200 + ctrl.getActual().getPosScore().getRoom()*10);
-            ctrl.getActual().clean();
-            ctrl.insert(ctrl.getActual());
-        }
         drawBackground();
     }
 
@@ -74,7 +69,6 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void openLb(ActionEvent event) {
-        ctrl.setActual(new Player(playerNickname.getText(), 0));
         //ctrl.createScenario(10, 1.6);
         Rundom.showWindow("scores.fxml");
 

@@ -4,12 +4,13 @@ import java.io.*;
 import java.util.*;
 import javax.swing.JOptionPane;
 
+
 public class Controller {
     private Player player;
 
     private Player actual;
 
-    private Scoreboard sb = new Scoreboard();
+    private Scoreboard sb = Scoreboard.getInstance();
     
     private VertexGraph<String, Moveable> stage;
 
@@ -50,11 +51,9 @@ public class Controller {
 
             for(int i=0; i<size; i++){
                 for (int j=0; j<size; j++){
-                    System.out.println("o");
                     template[i][j] = (int)Math.round(rand.nextDouble()*genConst);
                     stage.addVertex(i + "," + j, null);
                 }
-                System.out.println(Arrays.toString(template[i]));
                 k += Arrays.toString(template[i]) + "\n ";
             }
     
@@ -291,7 +290,7 @@ public class Controller {
                 json+=line;
             }
             fis.close();
-            Gson gson=new Gson();
+            Gson gson = new Gson();
             Country[] country=gson.fromJson(json, Country[].class);
             arrCountry.addAll(Arrays.asList(country));
 

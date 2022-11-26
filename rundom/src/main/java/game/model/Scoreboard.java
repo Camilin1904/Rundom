@@ -6,12 +6,13 @@ public class Scoreboard {
 
     private Player root;
     ArrayList<Pair<String, Double>> players = new ArrayList<>();
+    public static Scoreboard instance = new Scoreboard();
     public Scoreboard() {
 
     }
 
     public void insert(Player player, Player current) {
-
+        if(player.getScore()==0) return;
         if (player.getScore() == current.getScore()) {
             //si es igual, en este caso lo guardamos en el arraylist de nombres del nodo con el mismo score
             current.addArray(player.getName());
@@ -61,6 +62,10 @@ public class Scoreboard {
 
     public void clear(){
         players.clear();
+    }
+
+    public static Scoreboard getInstance() {
+        return instance;
     }
 
 }

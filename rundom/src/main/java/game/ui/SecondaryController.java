@@ -182,6 +182,7 @@ public class SecondaryController implements Initializable {
                                     isRunning = false;
                                     JOptionPane.showMessageDialog(null, "Game Over");
                                     Rundom.showWindow("primary.fxml");
+                                    insert();
                                     Stage current = (Stage) canvas.getScene().getWindow();
                                     current.hide();
                                 }
@@ -248,6 +249,7 @@ public class SecondaryController implements Initializable {
                                     JOptionPane.showMessageDialog(null, "Congratulations, you have escaped!");
                                     System.out.println(ctrl.getActual().getPosScore().getStartTime()-System.currentTimeMillis());
                                     ctrl.getActual().setScore(20000 + (ctrl.getActual().getPosScore().getStartTime()-System.currentTimeMillis())/1000);
+                                    insert();
                                     Rundom.showWindow("primary.fxml");
                                 }
                                 else{
@@ -286,6 +288,12 @@ public class SecondaryController implements Initializable {
         new Thread(()->{
 
         }).start();;
+    }
+
+    private void insert(){
+        ctrl.getActual().setScore(ctrl.getActual().getScore() + ctrl.getActual().getPosScore().getFloor()*200 + ctrl.getActual().getPosScore().getRoom()*10);
+        ctrl.getActual().clean();
+        ctrl.insert(ctrl.getActual());
     }
 
 }
