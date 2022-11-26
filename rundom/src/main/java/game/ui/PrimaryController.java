@@ -44,7 +44,7 @@ public class PrimaryController implements Initializable {
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
         if(ctrl!=null&&ctrl.getActual()!=null){
-            ctrl.getActual().setScore(ctrl.getActual().getPosScore().getFloor()*200 + ctrl.getActual().getPosScore().getRoom()*10);
+            ctrl.getActual().setScore(ctrl.getActual().getScore() + ctrl.getActual().getPosScore().getFloor()*200 + ctrl.getActual().getPosScore().getRoom()*10);
             ctrl.getActual().clean();
             ctrl.insert(ctrl.getActual());
         }

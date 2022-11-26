@@ -216,4 +216,22 @@ public class GraphTest extends TestCase {
         assertEquals(test2.Kruskal().toString(), "[{{b,e},100}, {{c,e},200}, {{a,d},400}, {{b,d},500}]");
 
     } 
+
+    public void testDFS(){
+        setUpScenario1();
+        test.DFS();
+        assertTrue(test.checkAllBlack());
+        setUpScenario2();
+        test.DFS();
+        assertTrue(test.checkAllBlack());
+    }
+
+    public void testDFSMatrix(){
+        setUpScenario3();
+        test2.DFS();
+        assertTrue(test2.checkAllBlack());
+        setUpScenario4();
+        test2.DFS();
+        assertTrue(test2.checkAllBlack());
+    }
 }

@@ -99,7 +99,7 @@ public class Controller {
         int i = (int)(rand.nextDouble()*size),j = (int)(rand.nextDouble()*size);
         boolean proceed = false;
         int dist = 0;
-        while(dist<3){
+        while(dist<(int)size/3){
             stage.addValue(i + "," + j, null);
             i = (int)(rand.nextDouble()*size);
             j = (int)(rand.nextDouble()*size);

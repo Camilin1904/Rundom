@@ -48,6 +48,7 @@ public class SecondaryController implements Initializable {
     private EnemyAvatar enemyAvatar;
 
     private boolean gameState = false;
+    private boolean ending = true;
 
     private int numKeys = 3;
 
@@ -79,10 +80,10 @@ public class SecondaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        boolean ending = false;
         boolean check = true;
         ctrl = Rundom.ctrl;
         ctrl.getActual().getPosScore().setRoom(ctrl.getActual().getPosScore().getRoom()+1);
+        ctrl.getActual().getPosScore().setStartTime(System.currentTimeMillis());
         if(ctrl.getActual().getPosScore().getRoom()>numFloors){
             ctrl.getActual().getPosScore().setRoom(1);
             ctrl.getActual().getPosScore().setFloor(ctrl.getActual().getPosScore().getFloor()+1);
@@ -97,10 +98,10 @@ public class SecondaryController implements Initializable {
                 enemyAvatar = new EnemyAvatar(canvas, "starman.png");
                 break;
             case(2):
-                enemyAvatar = new EnemyAvatar(canvas, "leel.png");
+                enemyAvatar = new EnemyAvatar(canvas, "evilstarman.png");
                 break;
             case(3):
-                enemyAvatar = new EnemyAvatar(canvas, "ness.png");
+                enemyAvatar = new EnemyAvatar(canvas, "evilfront.png");
                 break;
             case(4):
                 enemyAvatar = new EnemyAvatar(canvas, "iceSi.png");
@@ -243,8 +244,17 @@ public class SecondaryController implements Initializable {
                             }
                             else{
                                 isRunning = false;
-                                JOptionPane.showMessageDialog(null, "Stage Completed");
-                                Rundom.showWindow("canvasView.fxml");
+                                if(ending){
+                                    JOptionPane.showMessageDialog(null, "Congratulations, you have escaped!");
+                                    System.out.println(ctrl.getActual().getPosScore().getStartTime()-System.currentTimeMillis());
+                                    ctrl.getActual().setScore(20000 + (ctrl.getActual().getPosScore().getStartTime()-System.currentTimeMillis())/1000);
+                                    Rundom.showWindow("primary.fxml");
+                                }
+                                else{
+                                    JOptionPane.showMessageDialog(null, "Stage Completed");
+                                    Rundom.showWindow("canvasView.fxml");
+                                }
+                                
                                 Stage current = (Stage) canvas.getScene().getWindow();
                                 current.hide();
                             }

@@ -347,8 +347,16 @@ public class MatrixGraph<I extends Comparable<I>, T> extends VertexGraph<I, T>{
         aux.clear();
         adyacenseMatrix.clear();
     }
-    public static void main(String[] args) {
-        
+
+    public boolean checkAllBlack(){
+        boolean j = true;
+        for(Vertex<I,T> i : this){
+            if(i.getColor() != 2) {
+                j = false;
+                break;
+            }
+        }
+        return j;
     }
     
 }

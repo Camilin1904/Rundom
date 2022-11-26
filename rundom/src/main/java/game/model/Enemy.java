@@ -47,8 +47,8 @@ public class Enemy implements Moveable{
             for(Pair<Vertex<String, Moveable>,Integer> i : position.getAdyacentVertex()){
                 if(i.getA()==newPos){
                     if(i.getB()==2) returnS += "2";
+                    break;
                 }
-                break;
             }
             if (newPos.getValue()!=null&&newPos.getValue().equals(target)){
                 returnS = "y";

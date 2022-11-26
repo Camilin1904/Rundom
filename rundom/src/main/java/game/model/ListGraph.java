@@ -365,4 +365,15 @@ public class ListGraph<I extends Comparable<I>, T> extends VertexGraph<I, T>{
 
         System.out.println(g.prim("AT"));
     }
+
+    public boolean checkAllBlack(){
+        boolean j = true;
+        for(Vertex<I,T> i : this){
+            if(i.getColor() != 2) {
+                j = false;
+                break;
+            }
+        }
+        return j;
+    }
 }
