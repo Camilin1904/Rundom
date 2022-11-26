@@ -129,4 +129,9 @@ public class Player implements Moveable{
         return posScore;
     }
 
+    public void clean(){
+        dir = null;
+        position = null;
+        posScore = null;
+    }
 }

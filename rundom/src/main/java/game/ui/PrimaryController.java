@@ -17,14 +17,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PrimaryController implements Initializable {
-    private Controller controler= Rundom.ctrl;
+    private Controller ctrl= Rundom.ctrl;
     @FXML
     private Label welcomeText;
     @FXML
     private TextField playerNickname;
 
-    @FXML
-    private Button leaderboardBTN;
     @FXML
     private Button primaryButton;
 
@@ -42,7 +40,11 @@ public class PrimaryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
-
+        if(ctrl.getActual()!=null){
+            ctrl.getActual().setScore(ctrl.getActual().getPosScore().getFloor()*200 + ctrl.getActual().getPosScore().getRoom()*10);
+            ctrl.getActual().clean();
+            ctrl.insert(ctrl.getActual());
+        }
         drawBackground();
     }
 
@@ -58,24 +60,19 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void press(ActionEvent event) {
-        controler.setActual(new Player(playerNickname.getText(), 0));
-        //controler.createScenario(10, 1.6);
+        ctrl.setActual(new Player(playerNickname.getText(), 0));
+        //ctrl.createScenario(10, 1.6);
         Rundom.showWindow("canvasView.fxml");
-
-        controler.insert(controler.getActual());
-        controler.inorder();
         Stage current = (Stage) playerNickname.getScene().getWindow();
         current.hide();
     }
 
     @FXML
-    void openLb(ActionEvent event){
-        controler.setActual(new Player(playerNickname.getText(), 0));
-        //controler.createScenario(10, 1.6);
+    void openLb(ActionEvent event) {
+        ctrl.setActual(new Player(playerNickname.getText(), 0));
+        //ctrl.createScenario(10, 1.6);
         Rundom.showWindow("scores.fxml");
 
-        controler.insert(controler.getActual());
-        controler.inorder();
         Stage current = (Stage) playerNickname.getScene().getWindow();
         current.hide();
     }

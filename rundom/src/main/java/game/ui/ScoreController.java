@@ -108,18 +108,6 @@ public class ScoreController implements Initializable {
         canvas.setFocusTraversable(true);
 
         drawBackground();
-        controler.insert(new Player("san", 100));
-        controler.insert(new Player("cam", 1000));
-        controler.insert(new Player("sar", 1));
-        controler.insert(new Player("san", 100));
-        controler.insert(new Player("cam", 1000));
-        controler.insert(new Player("sar", 1));
-        controler.insert(new Player("san", 100));
-        controler.insert(new Player("cam", 1000));
-        controler.insert(new Player("sar", 1));
-        controler.insert(new Player("san", 100));
-        controler.insert(new Player("cam", 1000));
-        controler.insert(new Player("sar", 1));
         updateSb();
     }
 

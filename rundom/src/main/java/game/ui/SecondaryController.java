@@ -146,11 +146,11 @@ public class SecondaryController implements Initializable {
                         Platform.runLater(()->{
                             if(numKeys>0){
                                 if(gameState&&isRunning){
+                                    isRunning = false;
                                     JOptionPane.showMessageDialog(null, "Game Over");
                                     Rundom.showWindow("primary.fxml");
                                     Stage current = (Stage) canvas.getScene().getWindow();
                                     current.hide();
-                                    isRunning = false;
                                 }
                                 else{
                                     String go = "";
