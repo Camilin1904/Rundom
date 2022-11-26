@@ -176,15 +176,19 @@ public class Controller {
         extraEnemies.add(new Enemy());
         stage.clear();
         Enemy.getInstance().setTarget(actual);
+        extraEnemies.get(0).setTarget(actual);
+        extraEnemies.get(1).setTarget(actual);
         boolean check = false;
         String k = "";
         int[][] template = new int[size][size];
         while(!check){
             Enemy.getInstance().setMap(stage);
-
+            extraEnemies.get(0).setMap(stage);
+            extraEnemies.get(1).setMap(stage);
             for(int i=0; i<size; i++){
                 for (int j=0; j<size; j++){
-                    template[i][j] = (int)Math.round(rand.nextDouble()*genConst);
+                    int help = 0;
+                    template[i][j] = (help = (int)Math.round(rand.nextDouble()*genConst))>=2?1:help;
                     stage.addVertex(i + "," + j, null);
                 }
                 System.out.println(Arrays.toString(template[i]));
@@ -256,23 +260,36 @@ public class Controller {
         boolean proceed = false;
         int dist = 0;
         while(dist<3){
+            stage.addValue(i + "," + j, null);
+            i = (int)(rand.nextDouble()*size);
+            j = (int)(rand.nextDouble()*size);
             while (!proceed){
                 System.out.println("i");
-                if(template[i][j]!=0&&(stage.searchVertex(i + "," + j)).getValue()==null) {
+                if(template[i][j]!=0&&(stage.searchVertex(i + "," + j)).getValue()!=Enemy.getInstance()) {
                     stage.addValue(i + "," + j, actual);
                     actual.setPosition(stage.searchVertex(i + "," + j));
                     System.out.println(i + "," + j);
                     proceed = true;
                 }
                 if(!proceed){
-                    i = (int)(rand.nextDouble()*size);
-                    j = (int)(rand.nextDouble()*size);
+                    double l = 0;
+                    l = rand.nextDouble();
+                    l = l*size-0.01;
+                    i = ((int)l);
+                    l = rand.nextDouble();
+                    l = l*size;
+                    j = (int)l;
+                    rand = new Random(System.currentTimeMillis());
                 }
             }
             PriorityQueue<Integer> distList = new PriorityQueue<>();
             distList.add(Enemy.getInstance().updatePath());
             distList.add(extraEnemies.get(0).updatePath());
             distList.add(extraEnemies.get(1).updatePath());
+            System.out.println(Enemy.getInstance().getPath());
+            System.out.println(extraEnemies.get(0).getPath());
+            System.out.println(extraEnemies.get(1).getPath());
+            System.out.println(Enemy.getInstance().getPath().lastElement().equals(extraEnemies.get(0).getPath().lastElement())&&Enemy.getInstance().getPath().lastElement().equals(extraEnemies.get(1).getPath().lastElement())&&extraEnemies.get(1).getPath().lastElement().equals(extraEnemies.get(0).getPath().lastElement()));
             dist = distList.poll();
         }
         temp = template;
@@ -359,5 +376,9 @@ public class Controller {
         } else {
             sb.insert(current, sb.getRoot());
         }
+    }
+
+    public ArrayList<Enemy> getExtraEnemies() {
+        return extraEnemies;
     }
 }

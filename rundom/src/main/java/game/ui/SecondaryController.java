@@ -12,7 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import game.model.Controller;
 import game.model.Enemy;
@@ -41,7 +41,6 @@ public class SecondaryController implements Initializable {
     private int[][] template;
 
     private final double[] constants = {1.6, 1.3, 1.7, 2};
-    private boolean waitEnemy = false;
 
 
     //Elementos gráficos
@@ -51,6 +50,12 @@ public class SecondaryController implements Initializable {
     private boolean gameState = false;
 
     private int numKeys = 3;
+
+    private int numFloors = 5;
+
+    private ArrayList<EnemyAvatar> extraEnemies = null;
+    private long[] timerExtra = {0,0};
+    private int[] waitTimeExtra = {1000,1000};
 
 
     //Estados de las teclas
@@ -74,14 +79,16 @@ public class SecondaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        boolean ending = false;
+        boolean check = true;
         ctrl = Rundom.ctrl;
         ctrl.getActual().getPosScore().setRoom(ctrl.getActual().getPosScore().getRoom()+1);
-        if(ctrl.getActual().getPosScore().getRoom()>3){
+        if(ctrl.getActual().getPosScore().getRoom()>numFloors){
             ctrl.getActual().getPosScore().setRoom(1);
             ctrl.getActual().getPosScore().setFloor(ctrl.getActual().getPosScore().getFloor()+1);
         }
         template = ctrl.createScenario(10, constants[ctrl.getActual().getPosScore().getFloor()-1]);
-        ctrl.generateKeyPositions(ctrl.getActual().getPosScore().getFloor()==4&&ctrl.getActual().getPosScore().getRoom()==10?9:3);
+        ctrl.generateKeyPositions(3);
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
         avatar = new Avatar(canvas, "nessfuzzy.png");
@@ -95,8 +102,12 @@ public class SecondaryController implements Initializable {
             case(3):
                 enemyAvatar = new EnemyAvatar(canvas, "ness.png");
                 break;
+            case(4):
+                enemyAvatar = new EnemyAvatar(canvas, "iceSi.png");
+                ending = ctrl.getActual().getPosScore().getRoom()==numFloors;
+                break;
         }
-        speedStat = 1-((ctrl.getActual().getPosScore().getRoom()*0.1)+ctrl.getActual().getPosScore().getFloor()*0.115);
+        speedStat = 1-((ctrl.getActual().getPosScore().getRoom()*0.05)+ctrl.getActual().getPosScore().getFloor()*0.07);
         avatar.setCharacterInside(Rundom.ctrl.getActual());
         enemyAvatar.setCharacterInside(Enemy.getInstance());
         canvas.setOnKeyPressed(this::onKeyPressed);
@@ -108,6 +119,27 @@ public class SecondaryController implements Initializable {
         key = new Image(uri3);
         String uri4 = "file:"+ Rundom.class.getResource("slime.png").getPath();
         slime = new Image(uri4);
+        while(check){
+            try{
+                if(ending){
+                    speedStat = 0.4;
+                    template = ctrl.createFinalScenario(10,5);
+                    ctrl.generateKeyPositions(9);
+                    avatar.setCharacterInside(ctrl.getActual());
+                    extraEnemies = new ArrayList<>();
+                    enemyAvatar = new EnemyAvatar(canvas, "iceSi.png");
+                    enemyAvatar.setCharacterInside(Enemy.getInstance());
+                    extraEnemies.add(new EnemyAvatar(canvas, "Starman_Clay_Model.png"));
+                    extraEnemies.add(new EnemyAvatar(canvas, "ness.png"));
+                    ArrayList<Enemy> exEn = ctrl.getExtraEnemies();
+                    extraEnemies.get(0).setCharacterInside(exEn.get(0));
+                    extraEnemies.get(1).setCharacterInside(exEn.get(1));
+                }
+                check = false;
+            }
+            catch(NullPointerException e){}
+        }
+
         draw();
     }
 
@@ -159,13 +191,29 @@ public class SecondaryController implements Initializable {
                                         timer = System.currentTimeMillis();
                                         waitTime = 1000;
                                         if(go!=null&&go.length()>=2){
-                                            waitEnemy = true;
                                             waitTime = waitTime*2;
                                         }
                                     }
                                     else if(timer==0)timer = System.currentTimeMillis();
+                                    if(extraEnemies!=null){
+                                        for(int i=0; i<2; i++){
+                                            if(-timerExtra[i]+System.currentTimeMillis()>waitTimeExtra[i]*speedStat){
+                                                go = extraEnemies.get(i).getCharacterInside().move();
+                                                timerExtra[i] = System.currentTimeMillis();
+                                                waitTimeExtra[i] = 1000;
+                                                if(go!=null&&go.length()>=2){
+                                                    waitTimeExtra[i] = waitTimeExtra[i]*2;
+                                                }
+                                            }
+                                            else if(timerExtra[i]==0)timerExtra[i] = System.currentTimeMillis();
+                                        }
+                                    }
                                     drawBackground();
                                     enemyAvatar.draw();
+                                    if(extraEnemies!=null){
+                                        extraEnemies.get(0).draw();
+                                        extraEnemies.get(1).draw();
+                                    }
                                     int newNumKeys = 0;
                                     for(int i = 0; i<10; i++){
                                         for(int e=0; e<10; e++){
