@@ -35,7 +35,6 @@ public class Scoreboard {
     }
 
     public ArrayList<Pair<String, Double>> printScore(Player current, int n) {
-
         if (current == null) {
             return players;
         }
@@ -58,6 +57,10 @@ public class Scoreboard {
 
     public void setRoot(Player root) {
         this.root = root;
+    }
+
+    public void clear(){
+        players.clear();
     }
 
 }

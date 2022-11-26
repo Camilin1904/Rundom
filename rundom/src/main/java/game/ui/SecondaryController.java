@@ -76,7 +76,7 @@ public class SecondaryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrl = Rundom.ctrl;
         ctrl.getActual().getPosScore().setRoom(ctrl.getActual().getPosScore().getRoom()+1);
-        if(ctrl.getActual().getPosScore().getRoom()>10){
+        if(ctrl.getActual().getPosScore().getRoom()>3){
             ctrl.getActual().getPosScore().setRoom(1);
             ctrl.getActual().getPosScore().setFloor(ctrl.getActual().getPosScore().getFloor()+1);
         }
@@ -96,7 +96,7 @@ public class SecondaryController implements Initializable {
                 enemyAvatar = new EnemyAvatar(canvas, "ness.png");
                 break;
         }
-        speedStat = 1-((ctrl.getActual().getPosScore().getRoom()*0.02)+ctrl.getActual().getPosScore().getFloor()*0.05);
+        speedStat = 1-((ctrl.getActual().getPosScore().getRoom()*0.1)+ctrl.getActual().getPosScore().getFloor()*0.115);
         avatar.setCharacterInside(Rundom.ctrl.getActual());
         enemyAvatar.setCharacterInside(Enemy.getInstance());
         canvas.setOnKeyPressed(this::onKeyPressed);

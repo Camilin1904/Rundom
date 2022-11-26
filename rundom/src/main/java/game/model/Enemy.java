@@ -16,7 +16,7 @@ public class Enemy implements Moveable{
 
     private static Enemy instance = new Enemy();
 
-    private Enemy(){
+    public Enemy(){
         path = new Stack<>();
     }
     
@@ -56,7 +56,7 @@ public class Enemy implements Moveable{
             position = newPos;
         }
         
-        position.setValue(instance);
+        position.setValue(this);
         return returnS;
     }
 
@@ -64,14 +64,14 @@ public class Enemy implements Moveable{
         return move();
     }
 
-   public void updatePath(){
+   public int updatePath(){
         Vertex<String, Moveable> pPos = (Vertex<String, Moveable>) map.containerOf(target);
         if(goal!=pPos){
             path.clear();
             goal = pPos;
             path = (Stack<Vertex<String, Moveable>>) map.dijktraPath(position.getId(), pPos.getId());
         }
-        System.out.println(path);
+        return path.size();
     }
 
     public Player getTarget() {
