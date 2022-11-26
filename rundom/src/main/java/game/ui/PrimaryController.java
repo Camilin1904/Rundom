@@ -24,6 +24,8 @@ public class PrimaryController implements Initializable {
     private TextField playerNickname;
 
     @FXML
+    private Button leaderboardBTN;
+    @FXML
     private Button primaryButton;
 
     @FXML
@@ -59,6 +61,18 @@ public class PrimaryController implements Initializable {
         controler.setActual(new Player(playerNickname.getText(), 0));
         //controler.createScenario(10, 1.6);
         Rundom.showWindow("canvasView.fxml");
+
+        controler.insert(controler.getActual());
+        controler.inorder();
+        Stage current = (Stage) playerNickname.getScene().getWindow();
+        current.hide();
+    }
+
+    @FXML
+    void openLb(ActionEvent event){
+        controler.setActual(new Player(playerNickname.getText(), 0));
+        //controler.createScenario(10, 1.6);
+        Rundom.showWindow("scores.fxml");
 
         controler.insert(controler.getActual());
         controler.inorder();

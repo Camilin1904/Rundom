@@ -1,8 +1,11 @@
 package game.model;
 
+import java.util.ArrayList;
+
 public class Player implements Moveable{
     private String dir;
     private String name;
+    private ArrayList<String> names;
     private double score;
 
     private Player right;
@@ -16,6 +19,7 @@ public class Player implements Moveable{
     public Player (String name, double score) {
         this.name=name;
         this.score=score;
+        names = new ArrayList<String>();
         posScore = new Score();
     }
 
@@ -109,6 +113,17 @@ public class Player implements Moveable{
     }
     public void setPosition(Vertex<String, Moveable> position) {
         this.position = position;
+    }
+
+    public boolean empty() {
+        return names.isEmpty();
+    }
+
+    public ArrayList<String> getNames(){
+        return new ArrayList<>(names);
+    }
+    public void addArray(String value){
+        names.add(value);
     }
     public Score getPosScore() {
         return posScore;
