@@ -13,23 +13,40 @@ public class Avatar {
     private GraphicsContext gc;
 
     private Image tank, bg;
+    private int dir = 1;
 
     protected Vector pos;
 
     protected Moveable characterInside;
 
 
-    public Avatar(Canvas canvas, String image){
+    public Avatar(Canvas canvas, String image) {
         this.canvas = canvas;
         gc = canvas.getGraphicsContext2D();
-        String uri = "file:"+ Rundom.class.getResource(image).getPath();
+        String uri = "file:" + Rundom.class.getResource(image).getPath();
         tank = new Image(uri);
-        pos = new Vector(200,200);
+        pos = new Vector(200, 200);
     }
 
-    public void draw(){
+    public void draw() {
         gc.save();
-        gc.drawImage(tank, pos.x,pos.y, 70,70);
+        gc.drawImage(tank, pos.x, pos.y, 70, 70);
+        gc.restore();
+    }
+
+    public void move() {
+
+        gc.save();
+
+        if (dir == 0) {
+            gc.drawImage(new Image("file:" + Rundom.class.getResource("back.png").getPath()), pos.x, pos.y, 70, 70);
+        } else if (dir == 1) {
+            gc.drawImage(new Image("file:" + Rundom.class.getResource("front.png").getPath()), pos.x, pos.y, 70, 70);
+        } else if (dir == 2) {
+            gc.drawImage(new Image("file:" + Rundom.class.getResource("left.png").getPath()), pos.x, pos.y, 70, 70);
+        } else {
+            gc.drawImage(new Image("file:" + Rundom.class.getResource("right.png").getPath()), pos.x, pos.y, 70, 70);
+        }
         gc.restore();
     }
 
@@ -39,20 +56,27 @@ public class Avatar {
     }
 
 
-    public void moveUp(){
-            pos.y -= 70;
+    public void moveUp() {
+        dir = 0;
+        pos.y -= 70;
     }
-    public void moveDown(){
-            pos.y += 70;
-    }
-    public void moveLeft(){
 
-            pos.x -= 70;
+    public void moveDown() {
+        dir = 1;
+        pos.y += 70;
     }
-    public void moveRight(){
-            pos.x += 70;
+
+    public void moveLeft() {
+        dir = 2;
+        pos.x -= 70;
     }
-    public String move(String dir){
+
+    public void moveRight() {
+        dir = 4;
+        pos.x += 70;
+    }
+
+    public String move(String dir) {
         return characterInside.move(dir);
     }
 
@@ -62,9 +86,9 @@ public class Avatar {
 
     public void setCharacterInside(Moveable characterInside) {
         this.characterInside = characterInside;
-        String coord = ((Vertex<String,Moveable>) characterInside.getPosition()).toString();
-        pos.y = Integer.parseInt(coord.charAt(0) + "")*70;
-        pos.x = Integer.parseInt(coord.charAt(2) + "")*70;
+        String coord = ((Vertex<String, Moveable>) characterInside.getPosition()).toString();
+        pos.y = Integer.parseInt(coord.charAt(0) + "") * 70;
+        pos.x = Integer.parseInt(coord.charAt(2) + "") * 70;
     }
 
     public Moveable getCharacterInside() {

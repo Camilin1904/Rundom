@@ -100,7 +100,7 @@ public class SecondaryController implements Initializable {
         avatar.setCharacterInside(Rundom.ctrl.getActual());
         enemyAvatar.setCharacterInside(Enemy.getInstance());
         canvas.setOnKeyPressed(this::onKeyPressed);
-        String uri = "file:"+ Rundom.class.getResource("cc.png").getPath();
+        String uri = "file:"+ Rundom.class.getResource("wall.png").getPath();
         wall = new Image(uri);
         String uri2 = "file:"+ Rundom.class.getResource("suelo.png").getPath();
         bg = new Image(uri2);
@@ -190,7 +190,7 @@ public class SecondaryController implements Initializable {
                                     }
                                     numKeys = newNumKeys;
                                     gameState = go!=null&&go.equals("y");
-                                    avatar.draw();  
+                                    avatar.move();
                                 }    
                             }
                             else{
